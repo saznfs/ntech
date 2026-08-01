@@ -201,13 +201,16 @@ function initBackToTop() {
     const btn = document.getElementById('backToTopBtn');
     if (!btn) return;
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) {
+    const checkScroll = () => {
+        if (window.scrollY > 400 && window.innerWidth > 768) {
             btn.style.display = 'flex';
         } else {
             btn.style.display = 'none';
         }
-    });
+    };
+
+    window.addEventListener('scroll', checkScroll);
+    window.addEventListener('resize', checkScroll);
 
     btn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
