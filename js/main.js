@@ -1,6 +1,7 @@
 // N TECH Mobile Solution - Main Application Orchestrator
 
 document.addEventListener('DOMContentLoaded', () => {
+    initMobileNav();
     initHeaderScroll();
     initVideoControls();
     initBusinessHours();
@@ -8,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWhyChooseUs();
     renderCustomerReviews();
     renderFaqAccordion();
-    initMobileNav();
     initBackToTop();
 });
 
@@ -91,6 +91,7 @@ function scrollToShopCategory(catId) {
         // Cross-page: navigate to shop.html with category pre-selected
         window.location.href = 'shop.html?cat=' + catId;
     }
+}
 
 // Why Choose Us Section
 function renderWhyChooseUs() {
