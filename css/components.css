@@ -783,9 +783,29 @@
     transform: translateY(-2px);
 }
 
-.brand-select-card i {
+.brand-select-card i,
+.brand-select-card .brand-logo-icon {
     font-size: 1.8rem;
     color: var(--accent-cyan);
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.brand-select-card .brand-logo-icon svg {
+    max-height: 28px;
+    width: auto;
+    max-width: 68px;
+}
+
+.brand-select-card:hover i,
+.brand-select-card.selected i,
+.brand-select-card:hover .brand-logo-icon,
+.brand-select-card.selected .brand-logo-icon {
+    color: var(--accent-cyan);
+    transform: scale(1.08);
 }
 
 .wizard-search-box {

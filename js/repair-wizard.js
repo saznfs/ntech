@@ -147,10 +147,12 @@ function renderWizardStep2() {
             ${Object.keys(DEVICE_MODELS).map(brandKey => {
                 const brandObj = BRANDS.find(b => b.id === brandKey);
                 const brandName = brandObj ? brandObj.name : brandKey.toUpperCase();
-                const iconClass = brandObj ? brandObj.logoIcon : 'fa-mobile';
+                const logoHtml = (brandObj && brandObj.svgLogo) 
+                    ? `<div class="brand-logo-icon">${brandObj.svgLogo}</div>` 
+                    : `<i class="fa-solid ${brandObj ? brandObj.logoIcon : 'fa-mobile'}"></i>`;
                 return `
                     <div class="brand-select-card ${wizardState.brand === brandName ? 'selected' : ''}" onclick="onSelectBrand('${brandKey}', '${brandName}')">
-                        <i class="fa-solid ${iconClass}"></i>
+                        ${logoHtml}
                         <span style="font-weight: 600; font-size: 0.95rem;">${brandName}</span>
                     </div>
                 `;
