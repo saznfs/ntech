@@ -85,7 +85,7 @@ function renderDefaultSearchSuggestions() {
                 <div class="search-item-icon"><i class="fa-solid fa-mobile-screen"></i></div>
                 <div class="search-item-details">
                     <div class="search-item-title">${prod.name}</div>
-                    <div class="search-item-sub">${prod.brand} • ${prod.price}</div>
+                    <div class="search-item-sub">${prod.brand} • Ask Price via WhatsApp</div>
                 </div>
                 <span class="badge badge-green">${prod.badge}</span>
             </div>
@@ -145,7 +145,7 @@ function performUniversalSearch(query) {
                 <div class="search-item-icon"><i class="fa-solid fa-box-open"></i></div>
                 <div class="search-item-details">
                     <div class="search-item-title">${p.name}</div>
-                    <div class="search-item-sub">${p.brand} • ${p.price}</div>
+                    <div class="search-item-sub">${p.brand} • Ask Price via WhatsApp</div>
                 </div>
                 <span class="badge badge-green">${p.stockStatus}</span>
             </div>
