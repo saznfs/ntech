@@ -170,15 +170,25 @@ function toggleFaq(index) {
     });
 }
 
-// Mobile Nav Toggle (Global Function for bulletproof inline + JS invocation)
+// Mobile Nav Toggle
+let lastMobileNavToggleTime = 0;
 window.toggleMobileNav = function(e) {
-    if (e) e.stopPropagation();
+    if (e && typeof e.stopPropagation === 'function') {
+        e.stopPropagation();
+    }
+
+    // Prevent duplicate invocations within 100ms
+    const now = Date.now();
+    if (now - lastMobileNavToggleTime < 100) return;
+    lastMobileNavToggleTime = now;
+
     const toggle = document.getElementById('mobileMenuToggleBtn');
     const navMenu = document.querySelector('.nav-menu');
     if (!navMenu) return;
 
     const isActive = navMenu.classList.toggle('active');
     if (toggle) {
+        toggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
         const icon = toggle.querySelector('i');
         if (icon) {
             icon.className = isActive ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
@@ -191,27 +201,39 @@ function initMobileNav() {
     const navMenu = document.querySelector('.nav-menu');
     if (!toggle || !navMenu) return;
 
+    // Ensure initial aria attribute
+    toggle.setAttribute('aria-expanded', 'false');
+
     // Attach click listener calling toggleMobileNav
     toggle.addEventListener('click', window.toggleMobileNav);
+
+    // Close menu helper
+    const closeMobileMenu = () => {
+        if (navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
+            const icon = toggle.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars';
+        }
+    };
 
     // Close menu when clicking any nav link
     const navLinks = navMenu.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            const icon = toggle.querySelector('i');
-            if (icon) icon.className = 'fa-solid fa-bars';
-        });
+        link.addEventListener('click', closeMobileMenu);
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
         if (!navMenu.contains(e.target) && !toggle.contains(e.target)) {
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                const icon = toggle.querySelector('i');
-                if (icon) icon.className = 'fa-solid fa-bars';
-            }
+            closeMobileMenu();
+        }
+    });
+
+    // Close menu when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMobileMenu();
         }
     });
 }
