@@ -176,25 +176,34 @@ function initMobileNav() {
     const navMenu = document.querySelector('.nav-menu');
     if (!toggle || !navMenu) return;
 
-    toggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
+    const updateIcon = (isOpen) => {
         const icon = toggle.querySelector('i');
         if (icon) {
-            if (navMenu.classList.contains('active')) {
-                icon.className = 'fa-solid fa-xmark';
-            } else {
-                icon.className = 'fa-solid fa-bars';
-            }
+            icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
         }
+    };
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = navMenu.classList.toggle('active');
+        updateIcon(isActive);
     });
 
     const navLinks = navMenu.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             navMenu.classList.remove('active');
-            const icon = toggle.querySelector('i');
-            if (icon) icon.className = 'fa-solid fa-bars';
+            updateIcon(false);
         });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !toggle.contains(e.target)) {
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                updateIcon(false);
+            }
+        }
     });
 }
 
