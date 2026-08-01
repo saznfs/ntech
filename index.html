@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N TECH Mobile Solution | Premium Digital Showroom & Precision Mobile Repairs</title>
+    <meta name="description" content="N TECH Mobile Solution in Ihala Kottaramulla, Sri Lanka. Premium smartphones, genuine accessories, chargers, earbuds, displays, and express 30-minute mobile repair services. Inquire via WhatsApp.">
+    <meta name="keywords" content="N TECH Mobile Solution, Mobile Repair Sri Lanka, Kottaramulla Mobile Shop, iPhone Display Repair, Samsung Battery Replacement, Anker Earbuds, Phone Accessories Negombo Road">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6.5.1 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Master Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+    <!-- SITE HEADER / STICKY NAVBAR -->
+    <header class="site-header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="brand-logo">
+                    <img src="./logo/background_removed.png" alt="N TECH Mobile Solution Logo" onerror="this.onerror=null; this.src='./logo/logo.jpeg';">
+                    <div class="brand-title-group">
+                        <span class="brand-name">N TECH</span>
+                        <span class="brand-tagline">Mobile Solution</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active">Home</a></li>
+                    <li><a href="#shop" class="nav-link">Shop</a></li>
+                    <li><a href="#repair" class="nav-link">Repair Service</a></li>
+                    <li><a href="#categories" class="nav-link">Categories</a></li>
+                    <li><a href="#about" class="nav-link">About Us</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button class="search-trigger-btn trigger-search-modal" aria-label="Search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Search</span>
+                        <span class="search-kbd">⌘K</span>
+                    </button>
+
+                    <a href="https://wa.me/94712309934?text=Hi%20N%20TECH%20Mobile%20Solution,%20I%20have%20an%20inquiry." target="_blank" class="btn btn-whatsapp btn-sm">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span style="display: inline-block;">WhatsApp</span>
+                    </a>
+
+                    <button class="mobile-menu-toggle" id="mobileMenuToggleBtn" aria-label="Toggle Navigation Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION WITH AMBIENT VIDEO BACKDROP -->
+    <section class="hero-section" id="home">
+        <div class="hero-video-wrapper">
+            <video class="hero-video" id="heroBgVideo" autoplay loop muted playsinline poster="./background_image/bg_ for_pc.png">
+                <source src="./videos/logo_introduction.MP4" type="video/mp4">
+            </video>
+            <div class="hero-bg-image" style="background-image: url('./background_image/bg_ for_pc.png');"></div>
+            <div class="hero-overlay"></div>
+        </div>
+
+        <button class="video-control-btn" id="videoToggleBtn" title="Toggle Sound">
+            <i class="fa-solid fa-volume-xmark"></i>
+        </button>
+
+        <div class="container hero-content">
+            <div class="hero-badge-pill animate-float">
+                <i class="fa-solid fa-star" style="color: var(--accent-amber);"></i> 5.0 Rated Mobile Shop & Precision Repair Center
+            </div>
+
+            <h1 class="hero-title">
+                Premium Mobile Tech & <br>
+                <span class="text-gradient">Precision Repair Solutions.</span>
+            </h1>
+
+            <p class="hero-description">
+                Explore original smartphones, fast chargers, wireless earbuds, and armor cases. Get express 30-minute repair quotations auto-sent directly to WhatsApp.
+            </p>
+
+            <div class="hero-btn-group">
+                <a href="#shop" class="btn btn-primary btn-lg shimmer-effect">
+                    <i class="fa-solid fa-bag-shopping"></i> Explore Shop
+                </a>
+                <a href="#repair" class="btn btn-secondary btn-lg">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> Get Repair Quote
+                </a>
+            </div>
+
+            <div class="hero-stats-row">
+                <div class="hero-stat-card">
+                    <div class="hero-stat-number">5.0 ⭐</div>
+                    <div class="hero-stat-label">Google Rating (3 Reviews)</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-number">100%</div>
+                    <div class="hero-stat-label">Original Genuine Parts</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-number">30 – 60 Mins</div>
+                    <div class="hero-stat-label">Express Turnaround</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-number">Direct</div>
+                    <div class="hero-stat-label">WhatsApp Price Inquiry</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SMART UNIVERSAL SEARCH MODAL -->
+    <div class="search-modal-backdrop" id="searchModal">
+        <div class="search-modal-box">
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="search-input-field" id="universalSearchInput" placeholder="Search products, repairs, iPhone, Samsung, chargers, displays...">
+                <button class="search-close-btn" id="searchModalClose"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="search-results-container" id="searchResultsList">
+                <!-- Search suggestions populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORIES GRID SECTION -->
+    <section class="section-padding" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag"><i class="fa-solid fa-layer-group"></i> Explore Categories</span>
+                <h2>Everything For Your Mobile Device</h2>
+                <p>Browse our extensive collection of smartphones, accessories, and certified repair services.</p>
+            </div>
+
+            <div class="category-grid" id="categoriesHomeGrid">
+                <!-- Category cards populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- REPAIR SERVICE & STEP-BY-STEP QUOTATION WIZARD -->
+    <section class="section-padding repair-section-wrapper" id="repair">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag"><i class="fa-solid fa-screwdriver-wrench"></i> Expert Repair Center</span>
+                <h2>Instant Mobile Repair Quotation</h2>
+                <p>Select your repair issue, device brand, and model to generate an instant pre-filled WhatsApp quotation request.</p>
+            </div>
+
+            <div class="wizard-container" id="repairWizardBody">
+                <!-- Multi-step Wizard content rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT SHOWROOM SECTION -->
+    <section class="section-padding" id="shop">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag"><i class="fa-solid fa-shop"></i> Digital Showroom</span>
+                <h2>Featured Products & Accessories</h2>
+                <p>Original brand accessories with fast chargers, wireless audio, protective cases, and genuine replacement displays.</p>
+            </div>
+
+            <div class="shop-filters-bar">
+                <div class="category-tabs" id="categoryTabsBar">
+                    <!-- Dynamic category tabs rendered by JS -->
+                </div>
+            </div>
+
+            <div class="product-grid" id="productsGridContainer">
+                <!-- Product cards rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div class="modal-backdrop" id="productModal">
+        <div class="modal-content-box" id="productModalContent">
+            <!-- Modal Content rendered dynamically -->
+        </div>
+    </div>
+
+    <!-- BRAND SHOWCASE SECTION -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag"><i class="fa-solid fa-crown"></i> Authorized & Premium Brands</span>
+                <h2>Supported Brands & Ecosystems</h2>
+                <p>We stock accessories and perform precision hardware repairs for all major mobile technology brands.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1.25rem; text-align: center;">
+                <div class="glass-card" style="padding: 1.5rem;"><i class="fa-brands fa-apple" style="font-size: 2.2rem; color: #fff; margin-bottom: 0.5rem;"></i><div style="font-weight: 700;">Apple</div></div>
+                <div class="glass-card" style="padding: 1.5rem;"><i class="fa-solid fa-mobile" style="font-size: 2.2rem; color: var(--accent-cyan); margin-bottom: 0.5rem;"></i><div style="font-weight: 700;">Samsung</div></div>
+                <div class="glass-card" style="padding: 1.5rem;"><i class="fa-solid fa-microchip" style="font-size: 2.2rem; color: var(--accent-amber); margin-bottom: 0.5rem;"></i><div style="font-weight: 700;">Xiaomi</div></div>
+                <div class="glass-card" style="padding: 1.5rem;"><i class="fa-solid fa-plug" style="font-size: 2.2rem; color: var(--accent-emerald); margin-bottom: 0.5rem;"></i><div style="font-weight: 700;">Anker</div></div>
+                <div class="glass-card" style="padding: 1.5rem;"><i class="fa-solid fa-headphones" style="font-size: 2.2rem; color: var(--accent-purple); margin-bottom: 0.5rem;"></i><div style="font-weight: 700;">JBL</div></div>
+                <div class="glass-card" style="padding: 1.5rem;"><i class="fa-solid fa-bolt" style="font-size: 2.2rem; color: var(--accent-pink); margin-bottom: 0.5rem;"></i><div style="font-weight: 700;">Baseus</div></div>
+                <div class="glass-card" style="padding: 1.5rem;"><i class="fa-brands fa-google" style="font-size: 2.2rem; color: var(--accent-cyan); margin-bottom: 0.5rem;"></i><div style="font-weight: 700;">Google Pixel</div></div>
+                <div class="glass-card" style="padding: 1.5rem;"><i class="fa-solid fa-plus" style="font-size: 2.2rem; color: #ff0000; margin-bottom: 0.5rem;"></i><div style="font-weight: 700;">OnePlus</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US SECTION -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag"><i class="fa-solid fa-award"></i> The N TECH Advantage</span>
+                <h2>Why Choose N TECH Mobile Solution</h2>
+                <p>Combining Sri Lanka's finest technical expertise with transparent pricing and original products.</p>
+            </div>
+
+            <div class="category-grid" id="whyChooseUsGrid">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CUSTOMER REVIEWS SECTION -->
+    <section class="section-padding" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag"><i class="fa-solid fa-star"></i> Customer Feedback</span>
+                <h2>5.0 ⭐ Rated by Our Customers</h2>
+                <p>Real feedback from customers who visited our shop at Negombo Road, Ihala Kottaramulla.</p>
+            </div>
+
+            <div class="reviews-grid" id="customerReviewsGrid">
+                <!-- Reviews rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="section-padding" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag"><i class="fa-solid fa-circle-question"></i> FAQs</span>
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about our products, repair turnarounds, and warranties.</p>
+            </div>
+
+            <div class="faq-accordion" id="faqAccordionContainer">
+                <!-- FAQs rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="section-padding" id="about">
+        <div class="container">
+            <div class="glass-container" style="padding: 3rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;" class="contact-wrapper">
+                    <div>
+                        <span class="tag"><i class="fa-solid fa-building-user"></i> Business Profile</span>
+                        <h2 style="font-size: 2.4rem; margin-top: 0.8rem; margin-bottom: 1.2rem;">About N TECH Mobile Solution</h2>
+                        <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 1.2rem;">
+                            N TECH Mobile Solution is a trusted mobile phone sales and repair destination located at <strong>No. 96, Negombo Road, Ihala Kottaramulla, Sri Lanka</strong>. We combine a premium digital shopping experience with professional hardware micro-soldering and software unlocking services.
+                        </p>
+                        <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem;">
+                            Whether you need an express 30-minute display replacement, a genuine fast charger, or an instant WhatsApp price quote, our team delivers high standards of technical precision and friendly customer care.
+                        </p>
+
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <div class="glass-pill"><i class="fa-solid fa-location-dot"></i> Ihala Kottaramulla 61154</div>
+                            <div class="glass-pill"><i class="fa-solid fa-clock"></i> 8:30 AM – 10:00 PM Daily</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <img src="./logo/background_removed.png" alt="N TECH Mobile Solution Shop Logo" style="max-width: 280px; width: 100%; filter: drop-shadow(0 10px 30px rgba(56, 189, 248, 0.4)); margin-bottom: 1.5rem;" onerror="this.onerror=null; this.src='./logo/logo.jpeg';">
+                        <div style="display: flex; justify-content: center; gap: 1rem;">
+                            <a href="https://maps.app.goo.gl/EK1Euto6gXmWAENE9" target="_blank" class="btn btn-primary btn-sm">
+                                <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT & LOCATION SECTION -->
+    <section class="section-padding" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag"><i class="fa-solid fa-location-dot"></i> Store Location</span>
+                <h2>Visit Our Shop or Contact Us</h2>
+                <p>Located on Negombo Road, Ihala Kottaramulla. Open 7 days a week.</p>
+            </div>
+
+            <div class="contact-wrapper">
+                <div class="glass-card contact-info-card">
+                    <div id="liveHoursBadge" style="margin-bottom: 1.8rem;">
+                        <!-- Live opening hours badge -->
+                    </div>
+
+                    <div class="contact-detail-item">
+                        <div class="contact-detail-icon"><i class="fa-solid fa-shop"></i></div>
+                        <div>
+                            <strong style="display: block; font-size: 1.1rem;">N TECH Mobile Solution</strong>
+                            <span style="color: var(--text-muted); font-size: 0.92rem;">Mobile Phone Store, Accessories & Repair Center</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-detail-item">
+                        <div class="contact-detail-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <strong style="display: block; font-size: 1rem;">Address</strong>
+                            <span style="color: var(--text-muted); font-size: 0.92rem;">No. 96, Negombo Road, Ihala Kottaramulla 61154, Sri Lanka</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-detail-item">
+                        <div class="contact-detail-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <strong style="display: block; font-size: 1rem;">Phone / WhatsApp Hotline</strong>
+                            <a href="https://wa.me/94712309934" target="_blank" style="color: var(--accent-cyan); font-size: 1.05rem; font-weight: 700; text-decoration: none;">
+                                +94 71 230 9934
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-detail-item">
+                        <div class="contact-detail-icon"><i class="fa-regular fa-clock"></i></div>
+                        <div>
+                            <strong style="display: block; font-size: 1rem;">Opening Hours</strong>
+                            <span style="color: var(--text-muted); font-size: 0.92rem;">8:30 AM – 10:00 PM (Everyday)</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <a href="https://wa.me/94712309934?text=Hi%20N%20TECH%20Mobile%20Solution,%20I%20would%20like%20to%20visit%20your%20shop." target="_blank" class="btn btn-whatsapp btn-lg shimmer-effect" style="width: 100%;">
+                            <i class="fa-brands fa-whatsapp"></i> Chat Direct on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.5!2d79.88!3d7.35!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjEnMDAuMCJOIDc5wrA1Mic0OC4wIkU!5e0!3m2!1sen!2slk!4v1600000000000!5m2!1sen!2slk" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0; min-height: 380px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <div class="mobile-bottom-bar">
+        <a href="#home" class="mobile-bottom-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="#shop" class="mobile-bottom-item">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Shop</span>
+        </a>
+        <a href="#repair" class="mobile-bottom-item">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <span>Repair</span>
+        </a>
+        <a href="#" class="mobile-bottom-item trigger-search-modal">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+        <a href="https://wa.me/94712309934" target="_blank" class="mobile-bottom-item">
+            <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
+            <span>WhatsApp</span>
+        </a>
+    </div>
+
+    <!-- FLOATING WHATSAPP CTA & BACK TO TOP BUTTON -->
+    <a href="https://wa.me/94712309934?text=Hi%20N%20TECH%20Mobile%20Solution,%20I%20have%20an%20inquiry." target="_blank" class="floating-whatsapp-btn" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <button id="backToTopBtn" style="position: fixed; bottom: 2rem; left: 2rem; z-index: 1000; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid var(--border-glass-light); color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer;" title="Back to Top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-glass);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <img src="./logo/background_removed.png" alt="N TECH Logo" style="height: 40px;" onerror="this.onerror=null; this.src='./logo/logo.jpeg';">
+                    <div>
+                        <strong style="color: #fff; font-size: 1.1rem;">N TECH Mobile Solution</strong>
+                        <div style="font-size: 0.8rem; color: var(--text-dim);">Digital Showroom & Repair Center • Ihala Kottaramulla</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1.5rem; font-size: 1.2rem;">
+                    <a href="https://wa.me/94712309934" target="_blank" style="color: #25D366;"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://maps.app.goo.gl/EK1Euto6gXmWAENE9" target="_blank" style="color: var(--accent-cyan);"><i class="fa-solid fa-map-location-dot"></i></a>
+                    <a href="tel:+94712309934" style="color: var(--accent-purple);"><i class="fa-solid fa-phone"></i></a>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding-top: 1.5rem; font-size: 0.85rem;">
+                <div>
+                    © 2026 N TECH Mobile Solution. All Rights Reserved. Built for GitHub Pages.
+                </div>
+                <div style="color: var(--text-dim);">
+                    No. 96, Negombo Road, Ihala Kottaramulla 61154, Sri Lanka
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Core Modules -->
+    <script src="js/data.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/repair-wizard.js"></script>
+    <script src="js/shop.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
