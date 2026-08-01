@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+    <title>Repair Service | N TECH Mobile Solution – Instant WhatsApp Repair Quotation</title>
+    <meta name="description" content="Get an instant WhatsApp repair quotation from N TECH Mobile Solution. Display replacements, battery repairs, charging port fixes, and more. Express 30–60 min turnaround in Ihala Kottaramulla.">
+    <meta name="keywords" content="Mobile Repair Sri Lanka, iPhone Screen Repair Kottaramulla, Samsung Battery Replacement, Charging Port Fix, WhatsApp Repair Quote N TECH">
+
+    <!-- Favicon & App Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./logo/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./logo/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./logo/favicon_io/favicon-16x16.png">
+    <link rel="shortcut icon" href="./logo/favicon_io/favicon.ico">
+    <link rel="manifest" href="./logo/favicon_io/site.webmanifest">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6.5.1 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Master Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+    <!-- SITE HEADER / STICKY NAVBAR -->
+    <header class="site-header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="brand-logo">
+                    <img src="./logo/favicon_io/apple-touch-icon.png" alt="N TECH Logo" onerror="this.onerror=null; this.src='./logo/favicon_io/android-chrome-192x192.png';">
+                    <span class="brand-name">N TECH</span>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="shop.html" class="nav-link">Shop</a></li>
+                    <li><a href="repair.html" class="nav-link active">Repair Service</a></li>
+                    <li><a href="about.html#about" class="nav-link">About Us</a></li>
+                    <li><a href="about.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button class="search-trigger-btn trigger-search-modal" aria-label="Search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Search</span>
+                        <span class="search-kbd">⌘K</span>
+                    </button>
+
+                    <a href="https://wa.me/94712309934?text=Hi%20N%20TECH%20Mobile%20Solution,%20I%20have%20an%20inquiry." target="_blank" class="btn btn-whatsapp btn-sm">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+
+                    <button class="mobile-menu-toggle" id="mobileMenuToggleBtn" aria-label="Toggle Navigation Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SMART UNIVERSAL SEARCH MODAL -->
+    <div class="search-modal-backdrop" id="searchModal">
+        <div class="search-modal-box">
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="search-input-field" id="universalSearchInput" placeholder="Search products, repairs, iPhone, Samsung, chargers, displays...">
+                <button class="search-close-btn" id="searchModalClose"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="search-results-container" id="searchResultsList">
+                <!-- Search suggestions populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE HERO BANNER -->
+    <section class="page-hero-banner">
+        <div class="container">
+            <span class="tag"><i class="fa-solid fa-screwdriver-wrench"></i> Expert Repair Center</span>
+            <h1>Instant Mobile <span class="text-gradient">Repair Quotation</span></h1>
+            <p>Select your repair issue, device brand, and model to generate an instant pre-filled WhatsApp quotation request. Express 30–60 minute turnaround.</p>
+        </div>
+    </section>
+
+    <!-- REPAIR SERVICE & STEP-BY-STEP QUOTATION WIZARD -->
+    <section class="section-padding repair-section-wrapper" id="repair">
+        <div class="container">
+
+            <div class="wizard-container" id="repairWizardBody">
+                <!-- Multi-step Wizard content rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT DETAIL MODAL (needed for search results) -->
+    <div class="modal-backdrop" id="productModal">
+        <div class="modal-content-box" id="productModalContent">
+            <!-- Modal Content rendered dynamically -->
+        </div>
+    </div>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <div class="mobile-bottom-bar">
+        <a href="index.html" class="mobile-bottom-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="shop.html" class="mobile-bottom-item">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Shop</span>
+        </a>
+        <a href="repair.html" class="mobile-bottom-item active">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <span>Repair</span>
+        </a>
+        <a href="#" class="mobile-bottom-item trigger-search-modal">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+        <a href="https://wa.me/94712309934" target="_blank" class="mobile-bottom-item">
+            <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
+            <span>WhatsApp</span>
+        </a>
+    </div>
+
+    <!-- FLOATING WHATSAPP CTA & BACK TO TOP BUTTON -->
+    <a href="https://wa.me/94712309934?text=Hi%20N%20TECH%20Mobile%20Solution,%20I%20have%20an%20inquiry." target="_blank" class="floating-whatsapp-btn" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <button id="backToTopBtn" class="back-to-top-btn" title="Back to Top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-glass);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <img src="./logo/favicon_io/android-chrome-192x192.png" alt="N TECH Logo" style="height: 40px;" onerror="this.onerror=null; this.src='./logo/favicon_io/apple-touch-icon.png';">
+                    <div>
+                        <strong style="color: #fff; font-size: 1.1rem;">N TECH Mobile Solution</strong>
+                        <div style="font-size: 0.8rem; color: var(--text-dim);">Digital Showroom & Repair Center • Ihala Kottaramulla</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1.5rem; font-size: 1.2rem;">
+                    <a href="https://wa.me/94712309934" target="_blank" style="color: #25D366;"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://maps.app.goo.gl/EK1Euto6gXmWAENE9" target="_blank" style="color: var(--accent-cyan);"><i class="fa-solid fa-map-location-dot"></i></a>
+                    <a href="tel:+94712309934" style="color: var(--accent-purple);"><i class="fa-solid fa-phone"></i></a>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding-top: 1.5rem; font-size: 0.85rem;">
+                <div>
+                    © 2026 N TECH Mobile Solution. All Rights Reserved. Built for GitHub Pages.
+                </div>
+                <div style="color: var(--text-dim);">
+                    No. 96, Negombo Road, Ihala Kottaramulla 61154, Sri Lanka
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Core Modules -->
+    <script src="js/data.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/repair-wizard.js"></script>
+    <script src="js/shop.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

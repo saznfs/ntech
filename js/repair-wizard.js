@@ -13,6 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initRepairWizard() {
+    // Read URL hash for cross-page navigation (e.g., repair.html#issue=display-replacement)
+    const hash = window.location.hash.replace('#', '');
+    if (hash.startsWith('issue=')) {
+        const issueId = hash.replace('issue=', '');
+        const foundIssue = REPAIR_SERVICES.find(s => s.id === issueId);
+        if (foundIssue) {
+            wizardState.issue = foundIssue;
+            wizardState.step = 2;
+            renderWizardStep2();
+            return;
+        }
+    } else if (hash.startsWith('brand=')) {
+        try {
+            const parts = hash.split('&');
+            const brandKey = decodeURIComponent(parts[0].replace('brand=', ''));
+            const modelName = decodeURIComponent((parts[1] || '').replace('model=', ''));
+            if (!wizardState.issue) wizardState.issue = REPAIR_SERVICES[0];
+            const brandObj = BRANDS.find(b => b.id === brandKey);
+            wizardState.brand = brandObj ? brandObj.name : brandKey.toUpperCase();
+            wizardState.brandKey = brandKey;
+            wizardState.model = modelName;
+            wizardState.step = 4;
+            renderWizardStep4();
+            return;
+        } catch(e) {}
+    }
     renderWizardStep1();
 }
 

@@ -84,11 +84,13 @@ function scrollToShopCategory(catId) {
     const shopSec = document.getElementById('shop');
     if (shopSec) {
         shopSec.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+            if (window.filterProductsByCategory) window.filterProductsByCategory(catId);
+        }, 400);
+    } else {
+        // Cross-page: navigate to shop.html with category pre-selected
+        window.location.href = 'shop.html?cat=' + catId;
     }
-    if (window.filterProductsByCategory) {
-        window.filterProductsByCategory(catId);
-    }
-}
 
 // Why Choose Us Section
 function renderWhyChooseUs() {

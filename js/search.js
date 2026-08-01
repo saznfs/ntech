@@ -187,9 +187,12 @@ function selectSearchRepair(repairId) {
     const repairSec = document.getElementById('repair');
     if (repairSec) {
         repairSec.scrollIntoView({ behavior: 'smooth' });
-    }
-    if (window.selectWizardIssue) {
-        window.selectWizardIssue(repairId);
+        setTimeout(() => {
+            if (window.selectWizardIssue) window.selectWizardIssue(repairId);
+        }, 400);
+    } else {
+        // Cross-page: navigate to repair.html with issue pre-selected via hash
+        window.location.href = 'repair.html#issue=' + repairId;
     }
 }
 
@@ -198,8 +201,11 @@ function selectSearchModel(brandKey, modelName) {
     const repairSec = document.getElementById('repair');
     if (repairSec) {
         repairSec.scrollIntoView({ behavior: 'smooth' });
-    }
-    if (window.selectWizardBrandAndModel) {
-        window.selectWizardBrandAndModel(brandKey, modelName);
+        setTimeout(() => {
+            if (window.selectWizardBrandAndModel) window.selectWizardBrandAndModel(brandKey, modelName);
+        }, 400);
+    } else {
+        // Cross-page: navigate to repair.html with brand+model pre-selected
+        window.location.href = 'repair.html#brand=' + encodeURIComponent(brandKey) + '&model=' + encodeURIComponent(modelName);
     }
 }

@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initShopSection() {
+    // Read ?cat= URL query param for cross-page category navigation
+    const urlParams = new URLSearchParams(window.location.search);
+    const catParam = urlParams.get('cat');
+    if (catParam) activeCategoryFilter = catParam;
+
     renderCategoryTabs();
     renderProductsGrid();
 }
