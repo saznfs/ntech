@@ -186,6 +186,10 @@
     transition: all 0.2s ease;
 }
 
+.mobile-menu-toggle i {
+    pointer-events: none;
+}
+
 .mobile-menu-toggle:hover {
     background: rgba(56, 189, 248, 0.15);
     color: var(--accent-cyan);
@@ -204,6 +208,7 @@
         top: 100%;
         left: 0;
         right: 0;
+        width: 100%;
         flex-direction: column;
         align-items: stretch;
         background: rgba(7, 9, 14, 0.98);
@@ -213,7 +218,7 @@
         border-bottom: 1px solid rgba(56, 189, 248, 0.2);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
         gap: 0.5rem;
-        z-index: 1050;
+        z-index: 9999 !important;
     }
 
     .nav-menu.active {
