@@ -110,7 +110,7 @@ function openProductModal(productId) {
     content.innerHTML = `
         <button class="modal-close-btn" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;" class="modal-grid-inner">
+        <div class="modal-grid-inner">
             <div>
                 <div style="width: 100%; height: 320px; border-radius: var(--radius-lg); overflow: hidden; background: #000; border: 1px solid var(--border-glass-light);">
                     <img src="${prod.image}" alt="${prod.name}" style="width: 100%; height: 100%; object-fit: cover;">

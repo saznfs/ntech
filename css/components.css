@@ -1080,15 +1080,32 @@
 }
 
 /* Contact & Map Embed */
-.contact-wrapper {
+.contact-wrapper,
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.modal-grid-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;
 }
 
 @media (max-width: 992px) {
-    .contact-wrapper {
-        grid-template-columns: 1fr;
+    .contact-wrapper,
+    .about-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-grid-inner {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
     }
 }
 
@@ -1225,10 +1242,16 @@
         padding-right: 1rem;
     }
 
+    .glass-container {
+        padding: 1.5rem 1.25rem !important;
+    }
+
     .product-grid,
     .reviews-grid,
     .repair-cards-grid,
     .category-grid,
+    .contact-wrapper,
+    .about-grid,
     .hero-stats-row {
         grid-template-columns: 1fr !important;
     }
