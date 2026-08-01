@@ -84,11 +84,11 @@ function renderProductsGrid() {
                 </div>
 
                 <div class="product-actions">
-                    <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="openProductModal('${prod.id}')">
+                    <button class="btn-view-details" onclick="openProductModal('${prod.id}')">
                         <i class="fa-solid fa-eye"></i> Details
                     </button>
-                    <button class="btn btn-whatsapp btn-sm" style="flex: 1;" onclick="orderProductWhatsApp('${prod.id}')">
-                        <i class="fa-brands fa-whatsapp"></i> Order / Price
+                    <button class="btn-order-whatsapp shimmer-effect" onclick="orderProductWhatsApp('${prod.id}')">
+                        <i class="fa-brands fa-whatsapp"></i> Order & Price
                     </button>
                 </div>
             </div>

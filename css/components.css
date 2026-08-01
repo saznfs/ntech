@@ -958,8 +958,75 @@
 
 .product-actions {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
+    gap: 0.65rem;
+    margin-top: 1.1rem;
+    align-items: center;
+}
+
+.btn-order-whatsapp {
+    flex: 1;
+    background: linear-gradient(135deg, #10b981 0%, #059669 45%, #0284c7 100%);
+    background-size: 200% 200%;
+    color: #ffffff !important;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--radius-full);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.btn-order-whatsapp:hover {
+    background-position: 100% 0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.55), 0 0 18px rgba(56, 189, 248, 0.45);
+}
+
+.btn-order-whatsapp i {
+    font-size: 1.05rem;
+    transition: transform 0.25s ease;
+}
+
+.btn-order-whatsapp:hover i {
+    transform: scale(1.15) rotate(-8deg);
+}
+
+.btn-view-details {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.btn-view-details:hover {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    transform: translateY(-2px);
 }
 
 /* Product Detail Modal */
