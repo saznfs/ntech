@@ -175,19 +175,24 @@ function initMobileNav() {
     if (!toggle || !navMenu) return;
 
     toggle.addEventListener('click', () => {
-        if (navMenu.style.display === 'flex') {
-            navMenu.style.display = 'none';
-        } else {
-            navMenu.style.display = 'flex';
-            navMenu.style.flexDirection = 'column';
-            navMenu.style.position = 'absolute';
-            navMenu.style.top = '76px';
-            navMenu.style.left = '0';
-            navMenu.style.right = '0';
-            navMenu.style.background = '#07090e';
-            navMenu.style.padding = '2rem';
-            navMenu.style.borderBottom = '1px solid var(--border-glass)';
+        navMenu.classList.toggle('active');
+        const icon = toggle.querySelector('i');
+        if (icon) {
+            if (navMenu.classList.contains('active')) {
+                icon.className = 'fa-solid fa-xmark';
+            } else {
+                icon.className = 'fa-solid fa-bars';
+            }
         }
+    });
+
+    const navLinks = navMenu.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            const icon = toggle.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars';
+        });
     });
 }
 
