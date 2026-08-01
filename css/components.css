@@ -664,19 +664,23 @@
 
 .wizard-steps-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 2.5rem;
     position: relative;
+    gap: 0.5rem;
 }
 
 .wizard-step-indicator {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 0.4rem;
     z-index: 2;
     cursor: pointer;
+    flex: 1;
+    min-width: 0;
 }
 
 .step-num {
@@ -691,6 +695,7 @@
     font-weight: 700;
     color: var(--text-muted);
     transition: var(--transition-fast);
+    flex-shrink: 0;
 }
 
 .wizard-step-indicator.active .step-num {
@@ -709,6 +714,11 @@
     font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-muted);
+    text-align: center;
+    width: 100%;
+    line-height: 1.25;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .wizard-step-indicator.active .step-label {
@@ -1371,6 +1381,26 @@
 
     .modal-content-box {
         padding: 1.5rem 1.2rem;
+    }
+
+    .wizard-container {
+        padding: 1.5rem 1rem !important;
+    }
+
+    .wizard-steps-header {
+        margin-bottom: 1.75rem;
+        gap: 0.25rem;
+    }
+
+    .step-num {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    .step-label {
+        font-size: 0.725rem;
+        text-align: center;
     }
 }
 
