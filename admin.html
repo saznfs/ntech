@@ -220,7 +220,7 @@
                 <button class="btn-icon" onclick="closeModal('productEditModal')"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- The form wraps ONLY the scrollable body — NOT header/footer -->
+            <!-- Single scrollable area — no separate fixed footer -->
             <div class="admin-modal-body" id="productModalBodyScroll">
                 <form id="productForm" onsubmit="saveProduct(event)">
                     <input type="hidden" id="productIdInput">
@@ -334,13 +334,17 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
 
-            <!-- Footer is a direct flex child of modal-box — always visible, never scrolls away -->
-            <div class="admin-modal-footer">
-                <button type="button" class="btn btn-outline" onclick="closeModal('productEditModal')">Cancel</button>
-                <button type="submit" form="productForm" class="btn btn-primary" id="productModalSubmitBtn"><i class="fa-solid fa-check"></i> OK / Save Changes</button>
+                    <!-- Action buttons at the bottom of the scrollable form -->
+                    <div class="modal-form-actions">
+                        <button type="button" class="btn btn-outline" onclick="closeModal('productEditModal')">
+                            <i class="fa-solid fa-xmark"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="productModalSubmitBtn">
+                            <i class="fa-solid fa-check"></i> OK / Save Changes
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
