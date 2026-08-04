@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+    <title>Product Management System | N TECH Mobile Solution</title>
+    <meta name="description" content="N TECH Mobile Solution Product Management Dashboard for GitHub Pages. Manage website products, pricing, stock, images, and publish live with one click.">
+
+    <!-- Favicon & App Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./logo/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./logo/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./logo/favicon_io/favicon-16x16.png">
+    <link rel="shortcut icon" href="./logo/favicon_io/favicon.ico">
+    <link rel="manifest" href="./logo/favicon_io/site.webmanifest">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6.5.1 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Master Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/glassmorphism.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- ADMIN HEADER / ACTION NAVBAR -->
+    <header class="admin-header">
+        <div class="container">
+            <nav class="admin-nav">
+                <div class="admin-title-group">
+                    <a href="index.html" class="brand-logo">
+                        <img src="./logo/favicon_io/apple-touch-icon.png" alt="N TECH Logo">
+                        <span class="brand-name">N TECH</span>
+                    </a>
+                    <span class="admin-badge" id="syncStatusBadge"><i class="fa-solid fa-screwdriver-wrench"></i> Product Manager</span>
+                </div>
+
+                <div class="admin-actions">
+                    <button class="btn btn-primary btn-sm" onclick="openAddProductModal()">
+                        <i class="fa-solid fa-plus"></i> Add Product
+                    </button>
+                    <button class="btn btn-whatsapp btn-sm" style="background: linear-gradient(135deg, #00e676, #00b0ff); border: none;" onclick="startPublishWorkflow()">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Publish Website
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="openWebsitePreview()">
+                        <i class="fa-solid fa-eye"></i> Live Preview
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="exportJSON()" title="Export products.json file">
+                        <i class="fa-solid fa-download"></i> Export JSON
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="triggerImportJSON()" title="Import products.json file">
+                        <i class="fa-solid fa-file-import"></i> Import
+                    </button>
+                    <input type="file" id="importJsonFileInput" accept=".json" style="display: none;" onchange="handleImportJSON(event)">
+                    <button class="btn-icon" onclick="openModal('githubSettingsModal')" title="GitHub Repository Settings">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                    <a href="shop.html" class="btn btn-outline btn-sm" style="color: var(--text-dim);">
+                        <i class="fa-solid fa-arrow-left"></i> Exit
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="section-padding" style="flex: 1;">
+        <div class="container">
+
+            <!-- STATS OVERVIEW CARDS -->
+            <div class="admin-stats-grid">
+                <div class="glass-card stat-card">
+                    <div class="stat-icon cyan">
+                        <i class="fa-solid fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="statTotalProducts">0</h4>
+                        <span>Total Products</span>
+                    </div>
+                </div>
+
+                <div class="glass-card stat-card">
+                    <div class="stat-icon green">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="statInStock">0</h4>
+                        <span>In Stock Items</span>
+                    </div>
+                </div>
+
+                <div class="glass-card stat-card">
+                    <div class="stat-icon red">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="statOutOfStock">0</h4>
+                        <span>Out of Stock</span>
+                    </div>
+                </div>
+
+                <div class="glass-card stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4 id="statTrashCount">0</h4>
+                        <span>Recycle Bin Items</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTROLS & FILTER BAR -->
+            <div class="glass-card admin-controls-card">
+                <div class="admin-controls-row">
+                    
+                    <div class="search-filter-group">
+                        <div class="admin-search-input">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="adminSearchInput" placeholder="Search by name, brand, category or ID...">
+                        </div>
+
+                        <select id="adminCatFilterSelect" class="admin-select">
+                            <option value="all">All Categories</option>
+                        </select>
+
+                        <select id="adminStockFilterSelect" class="admin-select">
+                            <option value="all">All Stock Status</option>
+                            <option value="In Stock">In Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                            <option value="Available on Order">Available on Order</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="admin-tabs">
+                            <button class="tab-btn active" id="tabActiveBtn" onclick="switchTab('active')">
+                                <i class="fa-solid fa-list-check"></i> Products
+                                <span class="tab-badge" id="activeTabBadge">0</span>
+                            </button>
+                            <button class="tab-btn" id="tabTrashBtn" onclick="switchTab('trash')">
+                                <i class="fa-solid fa-trash"></i> Recycle Bin
+                                <span class="tab-badge" id="trashTabBadge">0</span>
+                            </button>
+                        </div>
+
+                        <button class="btn btn-outline btn-sm" id="clearTrashBtn" style="display: none; color: #ff3d00; border-color: rgba(255,61,0,0.3);" onclick="clearTrash()">
+                            <i class="fa-solid fa-trash-arrow-up"></i> Empty Trash
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PRODUCTS DATA TABLE -->
+            <div class="glass-card table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">Image</th>
+                            <th>Product Details</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Badge</th>
+                            <th style="width: 110px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminProductsTableBody">
+                        <!-- Table rows populated dynamically by js/admin.js -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ADD / EDIT PRODUCT MODAL -->
+    <div class="admin-modal-backdrop" id="productEditModal">
+        <div class="admin-modal-box">
+            <div class="admin-modal-header">
+                <div class="admin-modal-title" id="productModalTitle">
+                    <i class="fa-solid fa-box"></i> Add New Product
+                </div>
+                <button class="btn-icon" onclick="closeModal('productEditModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <div class="admin-modal-body">
+                    <input type="hidden" id="productIdInput">
+
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label class="form-label">Product Name *</label>
+                            <input type="text" id="productNameInput" class="form-input" placeholder="e.g. Anker Soundcore R50i NC Wireless Earbuds" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select id="productCategoryInput" class="admin-select" style="width: 100%;" required>
+                                <option value="chargers">Fast Chargers &amp; Adapters</option>
+                                <option value="earbuds">Earbuds &amp; Audio</option>
+                                <option value="cases">Cases &amp; Covers</option>
+                                <option value="displays">Original Displays</option>
+                                <option value="tempered-glass">Tempered Glass &amp; Protectors</option>
+                                <option value="memory-cards">Memory &amp; Storage</option>
+                                <option value="power-banks">Power Banks</option>
+                                <option value="cables">Charging &amp; Data Cables</option>
+                                <option value="phones">Mobile Phones</option>
+                                <option value="repairs">Repair Services &amp; Parts</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Brand</label>
+                            <input type="text" id="productBrandInput" class="form-input" placeholder="e.g. Apple, Samsung, Anker, Baseus" value="Apple">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Display Price / WhatsApp Text</label>
+                            <input type="text" id="productPriceInput" class="form-input" placeholder="e.g. Ask Price via WhatsApp or Rs. 8,500" value="Ask Price via WhatsApp">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Original Price (Optional Strike-through)</label>
+                            <input type="text" id="productOriginalPriceInput" class="form-input" placeholder="e.g. Rs. 10,500">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Stock Status</label>
+                            <select id="productStockStatusInput" class="admin-select" style="width: 100%;">
+                                <option value="In Stock">In Stock</option>
+                                <option value="Out of Stock">Out of Stock</option>
+                                <option value="Available on Order">Available on Order</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Stock Quantity</label>
+                            <input type="number" id="productStockQuantityInput" class="form-input" min="0" value="10">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Product Badge / Tag</label>
+                            <input type="text" id="productBadgeInput" class="form-input" placeholder="e.g. Best Seller, Original, 100% Genuine, MagSafe Ready" value="Original">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Parts / Build Quality</label>
+                            <input type="text" id="productPartsQualityInput" class="form-input" placeholder="e.g. 100% Original Apple, OEM Grade" value="100% Original">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label">Compatibility (Device Models)</label>
+                            <input type="text" id="productCompatibilityInput" class="form-input" placeholder="e.g. iPhone 15 Pro Max, Samsung S24, Universal">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label">Product Image (Upload or Web URL)</label>
+                            <div class="upload-dropzone" id="productImageDropzone">
+                                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                                <div><strong style="color: var(--accent-cyan);">Click to upload file</strong> or drag &amp; drop image here</div>
+                                <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">Images are automatically resized and WebP optimized</div>
+                            </div>
+                            <input type="file" id="productImageFileInput" accept="image/*" style="display: none;">
+                            
+                            <div style="margin-top: 0.75rem;">
+                                <input type="text" id="productImageUrlInput" class="form-input" placeholder="Or paste external Image URL (https://...)">
+                            </div>
+
+                            <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
+                                <img id="productImagePreview" class="preview-img-box" src="" alt="Preview">
+                                <div>
+                                    <strong style="font-size: 0.85rem; color: #fff;">Image Selected</strong>
+                                    <div id="previewImgInfo" style="font-size: 0.75rem; color: var(--text-dim);">Ready for save</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label">Description</label>
+                            <textarea id="productDescInput" class="form-textarea" rows="3" placeholder="Enter product overview, warranty details, features..."></textarea>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <label class="form-label">Key Specifications &amp; Highlights (Bulleted List)</label>
+                                <button type="button" class="btn btn-outline btn-sm" onclick="addSpecInputRow('')"><i class="fa-solid fa-plus"></i> Add Spec</button>
+                            </div>
+                            <div id="productSpecsContainer" class="specs-list">
+                                <!-- Dynamic spec rows -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('productEditModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- GITHUB REPOSITORY SETTINGS MODAL -->
+    <div class="admin-modal-backdrop" id="githubSettingsModal">
+        <div class="admin-modal-box" style="max-width: 550px;">
+            <div class="admin-modal-header">
+                <div class="admin-modal-title">
+                    <i class="fa-brands fa-github"></i> GitHub Repository Configuration
+                </div>
+                <button class="btn-icon" onclick="closeModal('githubSettingsModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="admin-modal-body">
+                <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1.25rem;">
+                    Connect your GitHub repository to publish updates directly to GitHub Pages with a single click.
+                </p>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label class="form-label">GitHub Username / Owner</label>
+                    <input type="text" id="ghOwnerInput" class="form-input" placeholder="e.g. your-github-username">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label class="form-label">Repository Name</label>
+                    <input type="text" id="ghRepoInput" class="form-input" placeholder="e.g. ntech">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label class="form-label">Branch Name</label>
+                    <input type="text" id="ghBranchInput" class="form-input" value="main">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label class="form-label">GitHub Personal Access Token (PAT)</label>
+                    <input type="password" id="ghTokenInput" class="form-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                    <span style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">Saved locally in your browser. Token requires `repo` scope.</span>
+                </div>
+            </div>
+
+            <div class="admin-modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('githubSettingsModal')">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveGitHubConfig()"><i class="fa-solid fa-check"></i> Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WEBSITE LIVE PREVIEW MODAL -->
+    <div class="admin-modal-backdrop" id="previewModal">
+        <div class="admin-modal-box" style="max-width: 1000px; height: 85vh;">
+            <div class="admin-modal-header">
+                <div class="admin-modal-title">
+                    <i class="fa-solid fa-desktop"></i> Live Website Preview
+                </div>
+                <button class="btn-icon" onclick="closeModal('previewModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="admin-modal-body" style="padding: 0; background: #000;">
+                <iframe id="previewIframe" src="about:blank" style="width: 100%; height: 100%; border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- PUBLISH PROGRESS WORKFLOW MODAL -->
+    <div class="admin-modal-backdrop" id="publishProgressModal">
+        <div class="admin-modal-box" style="max-width: 550px;">
+            <div class="admin-modal-header">
+                <div class="admin-modal-title">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Publishing Website
+                </div>
+                <button class="btn-icon" onclick="closeModal('publishProgressModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="admin-modal-body">
+                <div class="publish-steps">
+                    <div class="publish-step-item" id="publishStep1">
+                        <div class="step-status-icon active"><i class="fa-solid fa-spinner fa-spin"></i></div>
+                        <div>
+                            <strong style="color: #fff;">1. Validating Product Data</strong>
+                            <div class="step-msg" style="font-size: 0.8rem; color: var(--text-dim);">Checking products schema and formatting...</div>
+                        </div>
+                    </div>
+
+                    <div class="publish-step-item" id="publishStep2">
+                        <div class="step-status-icon pending"><i class="fa-solid fa-clock"></i></div>
+                        <div>
+                            <strong style="color: #fff;">2. Optimizing Assets</strong>
+                            <div class="step-msg" style="font-size: 0.8rem; color: var(--text-dim);">Compressing images and media...</div>
+                        </div>
+                    </div>
+
+                    <div class="publish-step-item" id="publishStep3">
+                        <div class="step-status-icon pending"><i class="fa-solid fa-clock"></i></div>
+                        <div>
+                            <strong style="color: #fff;">3. Updating products.json</strong>
+                            <div class="step-msg" style="font-size: 0.8rem; color: var(--text-dim);">Writing structured JSON payload...</div>
+                        </div>
+                    </div>
+
+                    <div class="publish-step-item" id="publishStep4">
+                        <div class="step-status-icon pending"><i class="fa-solid fa-clock"></i></div>
+                        <div>
+                            <strong style="color: #fff;">4. Deploying to GitHub Pages</strong>
+                            <div class="step-msg" style="font-size: 0.8rem; color: var(--text-dim);">Committing changes to repository...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="publishSuccessBanner" style="display: none; padding: 1rem; background: rgba(0, 230, 118, 0.15); border: 1px solid #00e676; border-radius: var(--radius-md); text-align: center; color: #00e676;">
+                    <i class="fa-solid fa-circle-check" style="font-size: 1.75rem; margin-bottom: 0.5rem; display: block;"></i>
+                    <strong>Website Updated Successfully!</strong>
+                    <div style="font-size: 0.8rem; color: #fff; margin-top: 0.25rem;">Your updated products are now published and live.</div>
+                </div>
+            </div>
+
+            <div class="admin-modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('publishProgressModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Core Modules -->
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

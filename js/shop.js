@@ -7,7 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initShopSection();
 });
 
-function initShopSection() {
+async function initShopSection() {
+    if (typeof fetchProductsData === 'function') {
+        await fetchProductsData();
+    }
     // Read ?cat= URL query param for cross-page category navigation
     const urlParams = new URLSearchParams(window.location.search);
     const catParam = urlParams.get('cat');

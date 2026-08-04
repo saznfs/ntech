@@ -190,7 +190,7 @@ const DEVICE_MODELS = {
     ]
 };
 
-const PRODUCTS = [
+let DEFAULT_PRODUCTS = [
     {
         id: "prod-1",
         name: "Anker Soundcore R50i NC True Wireless Earbuds",
@@ -201,6 +201,7 @@ const PRODUCTS = [
         badge: "Best Seller",
         partsQuality: "100% Original",
         stockStatus: "In Stock",
+        stockQuantity: 15,
         rating: 4.9,
         reviewsCount: 42,
         image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop&q=80",
@@ -218,6 +219,7 @@ const PRODUCTS = [
         badge: "Original",
         partsQuality: "100% Original Apple",
         stockStatus: "In Stock",
+        stockQuantity: 25,
         rating: 5.0,
         reviewsCount: 88,
         image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80",
@@ -235,6 +237,7 @@ const PRODUCTS = [
         badge: "Super Fast",
         partsQuality: "Original Samsung OEM",
         stockStatus: "In Stock",
+        stockQuantity: 20,
         rating: 4.9,
         reviewsCount: 35,
         image: "https://images.unsplash.com/photo-1622445268465-843d61408afe?w=600&auto=format&fit=crop&q=80",
@@ -252,6 +255,7 @@ const PRODUCTS = [
         badge: "High Capacity",
         partsQuality: "Original Baseus",
         stockStatus: "In Stock",
+        stockQuantity: 12,
         rating: 4.8,
         reviewsCount: 29,
         image: "https://images.unsplash.com/photo-1609592424074-8848d7990145?w=600&auto=format&fit=crop&q=80",
@@ -269,6 +273,7 @@ const PRODUCTS = [
         badge: "MagSafe Ready",
         partsQuality: "Premium Grade",
         stockStatus: "In Stock",
+        stockQuantity: 30,
         rating: 4.9,
         reviewsCount: 54,
         image: "https://images.unsplash.com/photo-1603313011101-320f26a4f6f6?w=600&auto=format&fit=crop&q=80",
@@ -286,6 +291,7 @@ const PRODUCTS = [
         badge: "Original Assembly",
         partsQuality: "100% Original Factory Display",
         stockStatus: "Available on Order",
+        stockQuantity: 5,
         rating: 5.0,
         reviewsCount: 12,
         image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80",
@@ -303,6 +309,7 @@ const PRODUCTS = [
         badge: "Free Installation",
         partsQuality: "9H Hardness",
         stockStatus: "In Stock",
+        stockQuantity: 50,
         rating: 4.9,
         reviewsCount: 110,
         image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&auto=format&fit=crop&q=80",
@@ -320,6 +327,7 @@ const PRODUCTS = [
         badge: "GaN V Tech",
         partsQuality: "Original Baseus",
         stockStatus: "In Stock",
+        stockQuantity: 10,
         rating: 5.0,
         reviewsCount: 22,
         image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80",
@@ -337,6 +345,7 @@ const PRODUCTS = [
         badge: "Deep Bass",
         partsQuality: "Original JBL",
         stockStatus: "In Stock",
+        stockQuantity: 18,
         rating: 4.8,
         reviewsCount: 38,
         image: "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=600&auto=format&fit=crop&q=80",
@@ -354,6 +363,7 @@ const PRODUCTS = [
         badge: "140MB/s Speed",
         partsQuality: "Original SanDisk",
         stockStatus: "In Stock",
+        stockQuantity: 40,
         rating: 4.9,
         reviewsCount: 74,
         image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&auto=format&fit=crop&q=80",
@@ -371,6 +381,7 @@ const PRODUCTS = [
         badge: "Heavy Duty",
         partsQuality: "Original Anker",
         stockStatus: "In Stock",
+        stockQuantity: 35,
         rating: 5.0,
         reviewsCount: 41,
         image: "https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=600&auto=format&fit=crop&q=80",
@@ -388,6 +399,7 @@ const PRODUCTS = [
         badge: "0 Cycle Battery",
         partsQuality: "100% Original Capacity",
         stockStatus: "In Stock",
+        stockQuantity: 8,
         rating: 5.0,
         reviewsCount: 19,
         image: "https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?w=600&auto=format&fit=crop&q=80",
@@ -396,6 +408,47 @@ const PRODUCTS = [
         desc: "Restore factory battery backup with zero battery degradation. Includes express 30-minute installation."
     }
 ];
+
+let PRODUCTS = DEFAULT_PRODUCTS;
+
+// Synchronous initial cache hydration
+try {
+    const cachedProducts = localStorage.getItem('ntech_products_data');
+    if (cachedProducts) {
+        const parsed = JSON.parse(cachedProducts);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+            PRODUCTS = parsed;
+        }
+    }
+} catch (e) {
+    console.warn("Failed to load cached products:", e);
+}
+
+// Asynchronous fetch from data/products.json
+async function fetchProductsData() {
+    try {
+        const localData = localStorage.getItem('ntech_products_data');
+        if (localData) {
+            const parsed = JSON.parse(localData);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                PRODUCTS = parsed;
+                return PRODUCTS;
+            }
+        }
+        const res = await fetch('data/products.json');
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                PRODUCTS = data;
+                localStorage.setItem('ntech_products_data', JSON.stringify(PRODUCTS));
+            }
+        }
+    } catch (e) {
+        console.warn("Could not fetch data/products.json, using current state", e);
+    }
+    return PRODUCTS;
+}
+
 
 const REVIEWS = [
     {
