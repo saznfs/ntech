@@ -558,7 +558,6 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
-    touch-action: none;
 }
 
 .admin-modal-backdrop.active {
@@ -581,7 +580,6 @@
     position: relative;
     transform: scale(0.96);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    touch-action: auto;
 }
 
 .admin-modal-backdrop.active .admin-modal-box {
@@ -591,10 +589,8 @@
 .admin-modal-box form {
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
+    flex: 1 1 0%;
     min-height: 0;
-    max-height: 100%;
-    height: 100%;
     overflow: hidden;
 }
 
@@ -607,7 +603,6 @@
     background: rgba(15, 23, 42, 0.98);
     flex-shrink: 0;
     z-index: 5;
-    touch-action: none;
 }
 
 .admin-modal-title {
@@ -621,13 +616,11 @@
 
 .admin-modal-body {
     padding: 1.4rem;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch !important;
-    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    flex: 1 1 0%;
     min-height: 0;
-    overscroll-behavior: contain;
-    overscroll-behavior-y: contain;
-    touch-action: pan-y !important;
 }
 
 .admin-modal-footer {
@@ -640,7 +633,6 @@
     background: rgba(10, 15, 29, 0.98);
     flex-shrink: 0;
     z-index: 5;
-    touch-action: none;
 }
 
 /* Form Layout Grid */
@@ -1211,31 +1203,28 @@
         padding: 0;
         align-items: flex-end;
         justify-content: center;
-        touch-action: none;
     }
 
     .admin-modal-box {
-        max-height: 90vh;
-        max-height: 90dvh;
-        height: 90vh;
-        height: 90dvh;
+        max-height: 88vh;
+        max-height: 88dvh;
+        height: 88vh;
+        height: 88dvh;
         border-radius: 22px 22px 0 0;
         width: 100%;
         margin: 0;
         border-bottom: none;
-        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.75);
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.85);
         display: flex;
         flex-direction: column;
         overflow: hidden;
         position: relative;
-        touch-action: auto;
     }
 
     .admin-modal-header {
         padding: 0.95rem 1.15rem;
         flex-shrink: 0;
         background: #0f172a;
-        touch-action: none;
     }
 
     .admin-modal-title {
@@ -1247,22 +1236,18 @@
     .admin-modal-box form {
         display: flex;
         flex-direction: column;
-        flex: 1 1 auto;
+        flex: 1 1 0%;
         min-height: 0;
-        max-height: 100%;
-        height: 100%;
         overflow: hidden;
     }
 
     .admin-modal-body {
         padding: 1.15rem;
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch !important;
-        flex: 1 1 auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        flex: 1 1 0%;
         min-height: 0;
-        overscroll-behavior: contain;
-        overscroll-behavior-y: contain;
-        touch-action: pan-y !important;
     }
 
     .form-grid {
@@ -1275,16 +1260,14 @@
     }
 
     .admin-modal-footer {
+        display: flex;
         flex-direction: row;
         gap: 0.65rem;
-        padding: 0.85rem 1.15rem calc(0.85rem + env(safe-area-inset-bottom, 0px));
+        padding: 0.85rem 1.15rem calc(0.85rem + env(safe-area-inset-bottom, 12px));
         background: #090e1a;
         border-top: 1px solid rgba(255, 255, 255, 0.12);
         flex-shrink: 0;
-        position: sticky;
-        bottom: 0;
         z-index: 15;
-        touch-action: none;
     }
 
     .admin-modal-footer .btn {
@@ -1298,7 +1281,6 @@
         border-radius: var(--radius-md);
         display: inline-flex;
         align-items: center;
-        touch-action: manipulation;
     }
 
     /* Centered dialogs on mobile (e.g. Success Alert) */
