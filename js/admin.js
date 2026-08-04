@@ -800,10 +800,8 @@ function updateSyncBadge(synced = false) {
     }
 }
 
-// Event Listeners Initialization
-function initEventListeners() {
-    updateSyncBadge();
-}
+// Sync badge initial state
+// (Event listeners are registered in the main initEventListeners function)
 
 // Modal Helpers
 function openModal(id) {
