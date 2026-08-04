@@ -1,47 +1,5 @@
 [
   {
-    "id": "prod-1785864017642",
-    "name": "20000 mah",
-    "category": "power-banks",
-    "brand": "Anker",
-    "price": "Ask Price via WhatsApp",
-    "originalPrice": "",
-    "badge": "Original",
-    "partsQuality": "100% Original",
-    "stockStatus": "In Stock",
-    "stockQuantity": 10,
-    "rating": 5,
-    "reviewsCount": 1,
-    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80",
-    "specs": [],
-    "compatibility": "",
-    "desc": ""
-  },
-  {
-    "id": "prod-1",
-    "name": "Anker Soundcore R50i NC",
-    "category": "earbuds",
-    "brand": "Anker",
-    "price": "Ask Price via WhatsApp",
-    "originalPrice": "8000",
-    "badge": "Best Seller",
-    "partsQuality": "100% Original",
-    "stockStatus": "In Stock",
-    "stockQuantity": 15,
-    "rating": 5,
-    "reviewsCount": 1,
-    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop&q=80",
-    "specs": [
-      "42dB Hybrid Active Noise Cancellation",
-      "10mm Big Bass Drivers",
-      "45 Hours Total Playtime with Fast Charge",
-      "IPX5 Water Resistant",
-      "Dual Mic AI Call Clarity"
-    ],
-    "compatibility": "Universal (iOS, Android, Windows, Mac)",
-    "desc": "Experience incredible clarity and rich bass with Anker Soundcore R50i NC. Features adaptive active noise cancellation and ergonomic glass design."
-  },
-  {
     "id": "prod-2",
     "name": "Apple 20W USB-C Fast Power Adapter",
     "category": "chargers",
