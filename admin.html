@@ -317,7 +317,7 @@
 
                 <div class="admin-modal-footer">
                     <button type="button" class="btn btn-outline" onclick="closeModal('productEditModal')">Cancel</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Product</button>
+                    <button type="submit" class="btn btn-primary" id="productModalSubmitBtn"><i class="fa-solid fa-check"></i> OK</button>
                 </div>
             </form>
         </div>
@@ -438,6 +438,20 @@
             <div class="admin-modal-footer">
                 <button type="button" class="btn btn-outline" onclick="closeModal('publishProgressModal')">Close</button>
             </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS CONFIRMATION MODAL WITH OK BUTTON -->
+    <div class="admin-modal-backdrop" id="successDialogModal">
+        <div class="admin-modal-box" style="max-width: 400px; text-align: center; padding: 2rem 1.5rem; border: 1px solid rgba(0, 230, 118, 0.3); box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(0, 230, 118, 0.15); border: 2px solid #00e676; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-size: 1.85rem; color: #00e676; box-shadow: 0 0 25px rgba(0, 230, 118, 0.3);">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 id="successDialogTitle" style="color: #fff; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Product Updated</h3>
+            <p id="successDialogMessage" style="color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem;">All changes have been successfully saved.</p>
+            <button type="button" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.85rem; font-size: 1rem; font-weight: 700; box-shadow: 0 4px 18px rgba(0, 242, 254, 0.35);" onclick="closeModal('successDialogModal')">
+                <i class="fa-solid fa-check"></i> OK
+            </button>
         </div>
     </div>
 

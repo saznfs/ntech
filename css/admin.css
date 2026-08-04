@@ -997,25 +997,27 @@
 
     .admin-table tbody tr.admin-prod-row {
         display: grid;
-        grid-template-columns: 68px 1fr auto;
+        grid-template-columns: 72px 1fr auto;
         grid-template-areas:
             "img details badge"
-            "img price price"
-            "tags tags tags"
+            "img price badge"
+            "cat cat cat"
+            "stock stock stock"
             "actions actions actions";
-        background: rgba(15, 23, 42, 0.85);
+        background: rgba(15, 23, 42, 0.88);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--border-glass-light);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: var(--radius-lg);
-        padding: 0.95rem;
-        gap: 0.5rem 0.75rem;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        padding: 1rem;
+        gap: 0.65rem 0.85rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         position: relative;
     }
 
-    .admin-table tbody tr:hover {
+    .admin-table tbody tr.admin-prod-row:hover {
         background: rgba(20, 30, 55, 0.95);
+        border-color: rgba(0, 242, 254, 0.3);
     }
 
     .admin-table td {
@@ -1031,10 +1033,12 @@
     }
 
     .admin-table .product-thumb {
-        width: 68px;
-        height: 68px;
+        width: 72px;
+        height: 72px;
         border-radius: 12px;
         object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .admin-table td.col-details {
@@ -1042,77 +1046,139 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        min-width: 0;
     }
 
     .admin-table .prod-meta-title {
         font-size: 0.95rem;
         font-weight: 700;
         color: #fff;
-        line-height: 1.3;
+        line-height: 1.35;
+        word-break: break-word;
     }
 
     .admin-table .prod-meta-sub {
         font-size: 0.75rem;
         color: var(--text-dim);
-        margin-top: 0.15rem;
+        margin-top: 0.2rem;
     }
 
     .admin-table td.col-badge {
         grid-area: badge;
         display: flex;
         align-items: flex-start;
+        justify-content: flex-end;
+    }
+
+    .admin-table td.col-badge .badge {
+        white-space: nowrap;
+        font-size: 0.7rem;
+        padding: 0.25rem 0.6rem;
     }
 
     .admin-table td.col-price {
         grid-area: price;
         display: flex;
         align-items: baseline;
-        gap: 0.4rem;
+        gap: 0.5rem;
+        margin-top: 0.15rem;
     }
 
-    .admin-table td.col-category,
-    .admin-table td.col-stock {
-        display: inline-flex;
-        align-items: center;
-        margin-top: 0.25rem;
+    .admin-table .price-val {
+        color: var(--accent-cyan);
+        font-size: 1.15rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        text-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
     }
 
-    .admin-table tbody tr.admin-prod-row {
-        grid-template-areas:
-            "img details badge"
-            "price price price"
-            "tags tags tags"
-            "actions actions actions";
+    .admin-table .price-orig {
+        font-size: 0.8rem;
+        text-decoration: line-through;
+        color: var(--text-dim);
     }
 
     .admin-table td.col-category {
-        margin-right: 0.5rem;
+        grid-area: cat;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-top: 0.2rem;
+    }
+
+    .admin-table td.col-category .badge {
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 8px;
+        max-width: 100%;
+    }
+
+    .admin-table td.col-stock {
+        grid-area: stock;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        width: 100%;
+        margin-top: 0.1rem;
+    }
+
+    .admin-table td.col-stock .qty-info {
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        font-weight: 500;
     }
 
     .admin-table td.col-actions {
         grid-area: actions;
         width: 100%;
-        margin-top: 0.25rem;
-        padding-top: 0.65rem;
+        margin-top: 0.35rem;
+        padding-top: 0.75rem;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .admin-table .action-btn-group {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
+        gap: 0.65rem;
         width: 100%;
     }
 
     .admin-table .action-btn-group .btn-icon {
         width: 100%;
-        height: 40px;
+        height: 42px;
         border-radius: var(--radius-md);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 0.4rem;
+        gap: 0.45rem;
         font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+    .admin-table .action-btn-group .btn-icon.edit {
+        background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(79, 172, 254, 0.15));
+        border: 1px solid rgba(0, 242, 254, 0.4);
+        color: #fff;
+    }
+    .admin-table .action-btn-group .btn-icon.edit:hover {
+        background: linear-gradient(135deg, rgba(0, 242, 254, 0.3), rgba(79, 172, 254, 0.3));
+        box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+    }
+
+    .admin-table .action-btn-group .btn-icon.delete {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        color: #fca5a5;
+    }
+    .admin-table .action-btn-group .btn-icon.delete:hover {
+        background: rgba(239, 68, 68, 0.25);
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     }
 
     /* Modal dialogs on Mobile: Bottom Sheet / Full Screen adaptation */

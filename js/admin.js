@@ -285,28 +285,42 @@ function renderProductsList() {
         return;
     }
 
-    tableBody.innerHTML = list.map(prod => `
+function formatDisplayPrice(price) {
+    if (!price && price !== 0) return 'Rs. 0';
+    let str = String(price).trim();
+    if (str.startsWith('Rs.') || str.startsWith('Rs ') || str.startsWith('LKR')) return str;
+    const num = parseFloat(str.replace(/[^0-9.]/g, ''));
+    if (!isNaN(num)) {
+        return 'Rs. ' + num.toLocaleString('en-US');
+    }
+    return 'Rs. ' + str;
+}
+
+    tableBody.innerHTML = list.map(prod => {
+        const displayPrice = formatDisplayPrice(prod.price);
+        const displayOrig = prod.originalPrice ? formatDisplayPrice(prod.originalPrice) : '';
+        return `
         <tr class="admin-prod-row" data-id="${prod.id}">
             <td class="col-img">
-                <img src="${prod.image}" alt="${prod.name}" class="product-thumb" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80'">
+                <img src="${prod.image}" alt="${escapeHtml(prod.name)}" class="product-thumb" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80'">
             </td>
             <td class="col-details">
-                <div class="prod-meta-title">${prod.name}</div>
-                <div class="prod-meta-sub">ID: ${prod.id} • ${prod.brand || 'N TECH'} • ${prod.partsQuality || 'Genuine'}</div>
-            </td>
-            <td class="col-category">
-                <span class="badge badge-purple">${formatCategoryName(prod.category)}</span>
-            </td>
-            <td class="col-price">
-                <strong class="price-val" style="color: var(--accent-cyan); font-size: 1rem;">${prod.price}</strong>
-                ${prod.originalPrice ? `<span class="price-orig" style="font-size:0.75rem; text-decoration:line-through; color:var(--text-dim); margin-left: 0.35rem;">${prod.originalPrice}</span>` : ''}
-            </td>
-            <td class="col-stock">
-                <span class="${getStockBadgeClass(prod.stockStatus)}">${prod.stockStatus}</span>
-                <span class="qty-info" style="font-size: 0.75rem; color: var(--text-dim); margin-left: 0.35rem;">(Qty: ${prod.stockQuantity !== undefined ? prod.stockQuantity : 10})</span>
+                <div class="prod-meta-title">${escapeHtml(prod.name)}</div>
+                <div class="prod-meta-sub">ID: ${prod.id} • ${escapeHtml(prod.brand || 'N TECH')} • ${escapeHtml(prod.partsQuality || '100% Genuine')}</div>
             </td>
             <td class="col-badge">
-                <span class="badge badge-cyan">${prod.badge || 'Standard'}</span>
+                <span class="badge badge-cyan">${escapeHtml(prod.badge || 'ORIGINAL')}</span>
+            </td>
+            <td class="col-price">
+                <strong class="price-val">${displayPrice}</strong>
+                ${displayOrig ? `<span class="price-orig">${displayOrig}</span>` : ''}
+            </td>
+            <td class="col-category">
+                <span class="badge badge-purple"><i class="fa-solid fa-layer-group"></i> ${escapeHtml(formatCategoryName(prod.category))}</span>
+            </td>
+            <td class="col-stock">
+                <span class="${getStockBadgeClass(prod.stockStatus)}"><i class="fa-solid fa-circle-check"></i> ${escapeHtml(prod.stockStatus || 'In Stock')}</span>
+                <span class="qty-info">(Qty: ${prod.stockQuantity !== undefined ? prod.stockQuantity : 10})</span>
             </td>
             <td class="col-actions">
                 <div class="action-btn-group">
@@ -332,7 +346,7 @@ function renderProductsList() {
                 </div>
             </td>
         </tr>
-    `).join('');
+    `}).join('');
 }
 
 function formatCategoryName(catId) {
@@ -359,6 +373,9 @@ function openAddProductModal() {
     document.getElementById('productIdInput').value = `prod-${Date.now()}`;
     document.getElementById('imagePreviewContainer').style.display = 'none';
     document.getElementById('productSpecsContainer').innerHTML = '';
+
+    const submitBtn = document.getElementById('productModalSubmitBtn');
+    if (submitBtn) submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> OK / Add Product';
 
     // Add default blank spec line
     addSpecInputRow('');
@@ -387,6 +404,9 @@ function openEditProductModal(productId) {
     document.getElementById('productCompatibilityInput').value = prod.compatibility || '';
     document.getElementById('productImageUrlInput').value = prod.image || '';
     document.getElementById('productDescInput').value = prod.desc || '';
+
+    const submitBtn = document.getElementById('productModalSubmitBtn');
+    if (submitBtn) submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> OK / Save Changes';
 
     // Display existing image preview
     const previewImg = document.getElementById('productImagePreview');
@@ -425,7 +445,8 @@ function addSpecInputRow(value = '') {
 }
 
 function escapeHtml(str) {
-    return str.replace(/"/g, '&quot;');
+    if (!str && str !== 0) return '';
+    return String(str).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 // Save Product Form Submission
@@ -436,8 +457,10 @@ function saveProduct(event) {
     const name = document.getElementById('productNameInput').value.trim();
     const category = document.getElementById('productCategoryInput').value;
     const brand = document.getElementById('productBrandInput').value;
-    const price = document.getElementById('productPriceInput').value.trim() || 'Rs. 7,990';
-    const originalPrice = document.getElementById('productOriginalPriceInput').value.trim();
+    const rawPrice = document.getElementById('productPriceInput').value.trim() || 'Rs. 7,990';
+    const price = formatDisplayPrice(rawPrice);
+    const rawOrig = document.getElementById('productOriginalPriceInput').value.trim();
+    const originalPrice = rawOrig ? formatDisplayPrice(rawOrig) : '';
     const stockStatus = document.getElementById('productStockStatusInput').value;
     const stockQuantity = parseInt(document.getElementById('productStockQuantityInput').value) || 0;
     const badge = document.getElementById('productBadgeInput').value.trim() || 'Original';
@@ -464,6 +487,7 @@ function saveProduct(event) {
         if (f.value.trim()) specs.push(f.value.trim());
     });
 
+    const isEdit = Boolean(adminState.editingId);
     const productData = {
         id,
         name,
@@ -483,7 +507,7 @@ function saveProduct(event) {
         desc
     };
 
-    if (adminState.editingId) {
+    if (isEdit) {
         const index = adminState.products.findIndex(p => p.id === adminState.editingId);
         if (index !== -1) {
             adminState.products[index] = productData;
@@ -500,7 +524,20 @@ function saveProduct(event) {
     saveAdminState();
     closeModal('productEditModal');
     renderDashboard();
-    showNotification(adminState.editingId ? 'Product updated successfully!' : 'New product added successfully!', 'success');
+
+    // Show stylish success modal with OK button
+    showSuccessModal(
+        isEdit ? 'Product Updated' : 'Product Added',
+        isEdit ? `"${productData.name}" has been updated successfully.` : `"${productData.name}" was added to your product catalog.`
+    );
+}
+
+function showSuccessModal(title = 'Product Saved', message = 'All changes have been successfully saved.') {
+    const titleEl = document.getElementById('successDialogTitle');
+    const msgEl = document.getElementById('successDialogMessage');
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.textContent = message;
+    openModal('successDialogModal');
 }
 
 // Recycle Bin CRUD Logic
