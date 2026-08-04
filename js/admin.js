@@ -64,7 +64,7 @@ async function loadAdminData(forceRemote = false) {
                 adminState.products = [];
             }
         }
-        
+
         if (forceRemote || !adminState.products || adminState.products.length === 0) {
             const res = await fetch(`data/products.json?_t=${Date.now()}&v=adm`, {
                 cache: 'no-store',
@@ -98,11 +98,11 @@ function saveAdminState() {
     localStorage.setItem('ntech_products_data', JSON.stringify(adminState.products));
     localStorage.setItem('ntech_products_trash', JSON.stringify(adminState.trash));
     localStorage.setItem('ntech_products_last_sync', String(Date.now()));
-    
+
     if (typeof PRODUCTS !== 'undefined') {
         PRODUCTS = adminState.products;
     }
-    
+
     // Broadcast live event for any open tabs or embeds
     window.dispatchEvent(new CustomEvent('ntech_products_updated', {
         detail: { products: adminState.products }
@@ -291,7 +291,7 @@ function renderProductsList() {
 
     // Apply Search Filter
     if (adminState.searchQuery) {
-        list = list.filter(p => 
+        list = list.filter(p =>
             p.name.toLowerCase().includes(adminState.searchQuery) ||
             p.brand.toLowerCase().includes(adminState.searchQuery) ||
             p.category.toLowerCase().includes(adminState.searchQuery) ||
@@ -321,16 +321,16 @@ function renderProductsList() {
         return;
     }
 
-function formatDisplayPrice(price) {
-    if (!price && price !== 0) return 'Rs. 0';
-    let str = String(price).trim();
-    if (str.startsWith('Rs.') || str.startsWith('Rs ') || str.startsWith('LKR')) return str;
-    const num = parseFloat(str.replace(/[^0-9.]/g, ''));
-    if (!isNaN(num)) {
-        return 'Rs. ' + num.toLocaleString('en-US');
+    function formatDisplayPrice(price) {
+        if (!price && price !== 0) return 'Rs. 0';
+        let str = String(price).trim();
+        if (str.startsWith('Rs.') || str.startsWith('Rs ') || str.startsWith('LKR')) return str;
+        const num = parseFloat(str.replace(/[^0-9.]/g, ''));
+        if (!isNaN(num)) {
+            return 'Rs. ' + num.toLocaleString('en-US');
+        }
+        return 'Rs. ' + str;
     }
-    return 'Rs. ' + str;
-}
 
     tableBody.innerHTML = list.map(prod => {
         const displayPrice = formatDisplayPrice(prod.price);
@@ -722,7 +722,7 @@ async function startPublishWorkflow() {
             // Direct GitHub API Commit Workflow
             const path = 'data/products.json';
             const content = btoa(unescape(encodeURIComponent(JSON.stringify(adminState.products, null, 2))));
-            
+
             // Get current file sha if exists
             let sha = '';
             const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, {
@@ -803,39 +803,38 @@ function updateSyncBadge(synced = false) {
 // Sync badge initial state
 // (Event listeners are registered in the main initEventListeners function)
 
-// Modal Helpers
+// Modal Helpers — iOS Safari compatible (no body lock)
 function openModal(id) {
     const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.add('active');
-        const bodyEl = modal.querySelector('.admin-modal-body');
-        if (bodyEl) {
-            bodyEl.scrollTop = 0;
-        }
-    }
+    if (!modal) return;
+    modal.classList.add('active');
+    // Reset scroll position of the body scroll container
+    const bodyEl = modal.querySelector('.admin-modal-body');
+    if (bodyEl) bodyEl.scrollTop = 0;
 }
 
 function closeModal(id) {
     const modal = document.getElementById(id);
-    if (modal) {
-        modal.classList.remove('active');
-    }
+    if (modal) modal.classList.remove('active');
 }
 
-// Prevent background page dragging on iOS when modal is open without locking document.body
-document.addEventListener('touchmove', (e) => {
-    const activeModal = document.querySelector('.admin-modal-backdrop.active');
-    if (!activeModal) return;
+// Prevent the background page from scrolling when a modal is open.
+// We allow touchmove on .admin-modal-body (native scroll), block everywhere else inside the backdrop.
+document.addEventListener('touchmove', function(e) {
+    const activeBackdrop = document.querySelector('.admin-modal-backdrop.active');
+    if (!activeBackdrop) return; // no modal open — let page scroll normally
 
-    // Allow native touch scrolling inside the modal body
-    if (e.target.closest('.admin-modal-body')) {
-        return;
+    // Allow scroll only inside the modal body scroll container
+    let node = e.target;
+    while (node && node !== activeBackdrop) {
+        if (node.classList && node.classList.contains('admin-modal-body')) {
+            return; // inside scroll zone — let it scroll natively
+        }
+        node = node.parentNode;
     }
 
-    // Prevent dragging background if touching backdrop, header or footer
-    if (e.target.closest('.admin-modal-backdrop')) {
-        e.preventDefault();
-    }
+    // Outside modal body (header, footer, backdrop) — prevent background scroll
+    e.preventDefault();
 }, { passive: false });
 
 // Click outside modal box to close

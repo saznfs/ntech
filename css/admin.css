@@ -101,8 +101,17 @@
 }
 
 @keyframes pulseGlow {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.92); }
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.6;
+        transform: scale(0.92);
+    }
 }
 
 /* Dedicated Admin Button System (100% Isolated & Pixel-Perfect) */
@@ -185,8 +194,15 @@
 }
 
 @keyframes floatIcon {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
 }
 
 /* Glass Outlined Button (Preview, Export, Import) */
@@ -268,11 +284,35 @@
     flex-shrink: 0;
 }
 
-.stat-icon.cyan { background: rgba(0, 240, 255, 0.15); color: var(--accent-cyan); border: 1px solid rgba(0, 240, 255, 0.3); }
-.stat-icon.purple { background: rgba(138, 43, 226, 0.15); color: var(--accent-purple); border: 1px solid rgba(138, 43, 226, 0.3); }
-.stat-icon.green { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
-.stat-icon.orange { background: rgba(255, 152, 0, 0.15); color: #ff9800; border: 1px solid rgba(255, 152, 0, 0.3); }
-.stat-icon.red { background: rgba(255, 61, 0, 0.15); color: #ff3d00; border: 1px solid rgba(255, 61, 0, 0.3); }
+.stat-icon.cyan {
+    background: rgba(0, 240, 255, 0.15);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+.stat-icon.purple {
+    background: rgba(138, 43, 226, 0.15);
+    color: var(--accent-purple);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.stat-icon.green {
+    background: rgba(0, 230, 118, 0.15);
+    color: #00e676;
+    border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+.stat-icon.orange {
+    background: rgba(255, 152, 0, 0.15);
+    color: #ff9800;
+    border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.stat-icon.red {
+    background: rgba(255, 61, 0, 0.15);
+    color: #ff3d00;
+    border: 1px solid rgba(255, 61, 0, 0.3);
+}
 
 .stat-info h4 {
     font-size: 1.45rem;
@@ -597,14 +637,29 @@
     transition: var(--transition-smooth);
 }
 
-.btn-icon:hover, .btn-icon:active {
+.btn-icon:hover,
+.btn-icon:active {
     background: rgba(255, 255, 255, 0.15);
     transform: translateY(-2px);
 }
 
-.btn-icon.edit:hover { background: rgba(0, 240, 255, 0.2); border-color: var(--accent-cyan); color: var(--accent-cyan); }
-.btn-icon.delete:hover { background: rgba(255, 61, 0, 0.2); border-color: #ff3d00; color: #ff3d00; }
-.btn-icon.restore:hover { background: rgba(0, 230, 118, 0.2); border-color: #00e676; color: #00e676; }
+.btn-icon.edit:hover {
+    background: rgba(0, 240, 255, 0.2);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+.btn-icon.delete:hover {
+    background: rgba(255, 61, 0, 0.2);
+    border-color: #ff3d00;
+    color: #ff3d00;
+}
+
+.btn-icon.restore:hover {
+    background: rgba(0, 230, 118, 0.2);
+    border-color: #00e676;
+    color: #00e676;
+}
 
 /* Modal Form Styles */
 .admin-modal-backdrop {
@@ -621,6 +676,7 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
+    /* NO touch-action:none here — must not block child scroll gestures */
 }
 
 .admin-modal-backdrop.active {
@@ -636,15 +692,14 @@
     max-width: 780px;
     max-height: 90vh;
     max-height: 90dvh;
-    height: 90vh;
-    height: 90dvh;
     display: flex;
     flex-direction: column;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), var(--shadow-glow);
-    overflow: hidden;
+    /* NO overflow:hidden — it clips children and breaks iOS scroll allocation */
+    overflow: visible;
     position: relative;
-    transform: scale(0.96);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: scale(0.96);
 }
 
 .modal-drag-handle {
@@ -661,11 +716,7 @@
     transform: scale(1);
 }
 
-/* Make form transparent in flex layout so body and footer are direct children */
-.admin-modal-box form {
-    display: contents;
-}
-
+/* Header — fixed height, does not scroll */
 .admin-modal-header {
     padding: 1.1rem 1.4rem;
     border-bottom: 1px solid var(--border-glass);
@@ -675,6 +726,7 @@
     background: rgba(15, 23, 42, 0.98);
     flex-shrink: 0;
     z-index: 5;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .admin-modal-title {
@@ -686,17 +738,23 @@
     gap: 0.65rem;
 }
 
+/* THE critical scroll container — direct flex child of modal-box */
 .admin-modal-body {
-    padding: 1.4rem;
-    overflow-y: auto !important;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain !important;
-    overscroll-behavior-y: contain !important;
-    flex: 1 1 auto;
+    flex: 1 1 0;
     min-height: 0;
+    padding: 1.4rem;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
 }
 
+/* Form inside body — no flex tricks, just normal block flow */
+.admin-modal-body form {
+    display: block;
+    width: 100%;
+}
+
+/* Footer — fixed height, does not scroll */
 .admin-modal-footer {
     padding: 1rem 1.4rem;
     border-top: 1px solid var(--border-glass);
@@ -704,9 +762,10 @@
     justify-content: flex-end;
     align-items: center;
     gap: 0.75rem;
-    background: rgba(10, 16, 30, 0.98);
+    background: rgba(10, 15, 29, 0.98);
     flex-shrink: 0;
     z-index: 5;
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
 }
 
 /* Form Layout Grid */
@@ -732,7 +791,8 @@
     color: var(--text-dim);
 }
 
-.form-input, .form-textarea {
+.form-input,
+.form-textarea {
     width: 100%;
     min-height: 44px;
     padding: 0.7rem 0.9rem;
@@ -742,14 +802,16 @@
     color: #fff;
     color-scheme: dark;
     font-family: inherit;
-    font-size: 0.95rem; /* Prevents auto-zoom on iOS */
+    font-size: 0.95rem;
+    /* Prevents auto-zoom on iOS */
     outline: none;
     transition: var(--transition-smooth);
     -webkit-appearance: none;
     appearance: none;
 }
 
-.form-input:focus, .form-textarea:focus {
+.form-input:focus,
+.form-textarea:focus {
     border-color: var(--accent-cyan);
     box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
     background: rgba(255, 255, 255, 0.08);
@@ -766,7 +828,8 @@
     background: rgba(255, 255, 255, 0.02);
 }
 
-.upload-dropzone:hover, .upload-dropzone.dragover {
+.upload-dropzone:hover,
+.upload-dropzone.dragover {
     border-color: var(--accent-cyan);
     background: rgba(0, 240, 255, 0.06);
 }
@@ -902,7 +965,8 @@
     min-width: 0;
 }
 
-.mobile-dock-btn:active, .mobile-dock-btn:hover {
+.mobile-dock-btn:active,
+.mobile-dock-btn:hover {
     color: #fff;
     transform: translateY(-1px);
 }
@@ -951,7 +1015,8 @@
     }
 
     .admin-body {
-        padding-bottom: 6rem; /* Ensures content is never obscured by mobile dock */
+        padding-bottom: 6rem;
+        /* Ensures content is never obscured by mobile dock */
     }
 
     .admin-header {
@@ -1056,7 +1121,8 @@
     }
 
     .admin-search-input input {
-        font-size: 16px !important; /* Critical to prevent iOS Safari auto-zoom */
+        font-size: 16px !important;
+        /* Critical to prevent iOS Safari auto-zoom */
         min-height: 46px;
         height: 46px;
         padding-left: 2.65rem;
@@ -1071,7 +1137,8 @@
     }
 
     .admin-select {
-        font-size: 16px !important; /* Critical to prevent iOS Safari auto-zoom */
+        font-size: 16px !important;
+        /* Critical to prevent iOS Safari auto-zoom */
         min-height: 46px;
         height: 46px;
         padding-left: 2.35rem;
@@ -1128,7 +1195,8 @@
     }
 
     .admin-table thead {
-        display: none; /* Hide standard table headers on mobile */
+        display: none;
+        /* Hide standard table headers on mobile */
     }
 
     .admin-table tbody {
@@ -1309,6 +1377,7 @@
         border: 1px solid rgba(0, 242, 254, 0.4);
         color: #fff;
     }
+
     .admin-table .action-btn-group .btn-icon.edit:hover {
         background: linear-gradient(135deg, rgba(0, 242, 254, 0.3), rgba(79, 172, 254, 0.3));
         box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
@@ -1319,42 +1388,48 @@
         border: 1px solid rgba(239, 68, 68, 0.35);
         color: #fca5a5;
     }
+
     .admin-table .action-btn-group .btn-icon.delete:hover {
         background: rgba(239, 68, 68, 0.25);
         box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     }
 
-    /* Modal dialogs on Mobile: Bottom Sheet adaptation */
+    /* Modal dialogs on Mobile: Bottom Sheet */
     .admin-modal-backdrop {
         padding: 0;
         align-items: flex-end;
         justify-content: center;
+        /* NO touch-action:none on backdrop */
     }
 
     .admin-modal-box {
-        max-height: 88vh;
-        max-height: 88dvh;
-        height: 88vh;
-        height: 88dvh;
-        border-radius: 24px 24px 0 0;
+        max-height: 92vh;
+        max-height: 92dvh;
+        height: 92vh;
+        height: 92dvh;
+        border-radius: 20px 20px 0 0;
         width: 100%;
         margin: 0;
         border-bottom: none;
         box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.85);
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        /* NO overflow:hidden — prevents iOS from allocating scroll layer */
+        overflow: visible;
         position: relative;
     }
 
     .modal-drag-handle {
         display: block;
+        flex-shrink: 0;
     }
 
     .admin-modal-header {
         padding: 0.85rem 1.15rem;
         flex-shrink: 0;
         background: #0f172a;
+        border-radius: 20px 20px 0 0;
+        /* NO touch-action:none */
     }
 
     .admin-modal-title {
@@ -1363,31 +1438,13 @@
         padding-right: 0.5rem;
     }
 
-    .admin-modal-box form {
-        display: contents;
-    }
-
     .admin-modal-body {
-        padding: 1.15rem;
-        overflow-y: auto !important;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch !important;
-        overscroll-behavior: contain !important;
-        overscroll-behavior-y: contain !important;
-        flex: 1 1 auto;
+        flex: 1 1 0;
         min-height: 0;
-    }
-
-    .admin-modal-footer {
-        padding: 0.85rem 1.15rem calc(0.85rem + env(safe-area-inset-bottom, 12px));
-        flex-shrink: 0;
-        background: #090e1a;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 0.75rem;
-        z-index: 5;
+        padding: 1.15rem;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
     }
 
     .form-grid {
@@ -1399,8 +1456,10 @@
         grid-column: span 1;
     }
 
-    .form-input, .form-textarea {
-        font-size: 16px !important; /* Critical to prevent iOS auto-zoom */
+    .form-input,
+    .form-textarea {
+        font-size: 16px !important;
+        /* Critical to prevent iOS auto-zoom */
         min-height: 46px;
         border-radius: 12px;
     }
