@@ -621,7 +621,6 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
-    touch-action: none;
 }
 
 .admin-modal-backdrop.active {
@@ -637,16 +636,15 @@
     max-width: 780px;
     max-height: 90vh;
     max-height: 90dvh;
+    height: 90vh;
+    height: 90dvh;
     display: flex;
     flex-direction: column;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), var(--shadow-glow);
     overflow: hidden;
     position: relative;
     transform: scale(0.96);
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    touch-action: auto;
 }
 
 .modal-drag-handle {
@@ -663,13 +661,9 @@
     transform: scale(1);
 }
 
+/* Make form transparent in flex layout so body and footer are direct children */
 .admin-modal-box form {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
-    min-height: 0;
-    height: 100%;
-    overflow: visible; /* Never use overflow:hidden on form on iOS Safari */
+    display: contents;
 }
 
 .admin-modal-header {
@@ -694,16 +688,13 @@
 
 .admin-modal-body {
     padding: 1.4rem;
-    overflow-y: scroll !important; /* Forces dedicated scroll layer on iOS */
+    overflow-y: auto !important;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch !important;
-    touch-action: pan-y !important;
     overscroll-behavior: contain !important;
     overscroll-behavior-y: contain !important;
     flex: 1 1 auto;
     min-height: 0;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
 }
 
 .admin-modal-footer {
@@ -713,7 +704,7 @@
     justify-content: flex-end;
     align-items: center;
     gap: 0.75rem;
-    background: rgba(10, 15, 29, 0.98);
+    background: rgba(10, 16, 30, 0.98);
     flex-shrink: 0;
     z-index: 5;
 }
@@ -1333,12 +1324,11 @@
         box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     }
 
-    /* Modal dialogs on Mobile: Bottom Sheet / Full Screen adaptation */
+    /* Modal dialogs on Mobile: Bottom Sheet adaptation */
     .admin-modal-backdrop {
         padding: 0;
         align-items: flex-end;
         justify-content: center;
-        touch-action: none;
     }
 
     .admin-modal-box {
@@ -1355,21 +1345,16 @@
         flex-direction: column;
         overflow: hidden;
         position: relative;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-        touch-action: auto;
     }
 
     .modal-drag-handle {
         display: block;
-        touch-action: none;
     }
 
     .admin-modal-header {
         padding: 0.85rem 1.15rem;
         flex-shrink: 0;
         background: #0f172a;
-        touch-action: none;
     }
 
     .admin-modal-title {
@@ -1379,26 +1364,30 @@
     }
 
     .admin-modal-box form {
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 auto;
-        min-height: 0;
-        height: 100%;
-        overflow: visible; /* Never use overflow:hidden on form on iOS Safari */
+        display: contents;
     }
 
     .admin-modal-body {
         padding: 1.15rem;
-        overflow-y: scroll !important; /* Forces native scroll layer allocation on iOS */
+        overflow-y: auto !important;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch !important;
-        touch-action: pan-y !important;
         overscroll-behavior: contain !important;
         overscroll-behavior-y: contain !important;
         flex: 1 1 auto;
         min-height: 0;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
+    }
+
+    .admin-modal-footer {
+        padding: 0.85rem 1.15rem calc(0.85rem + env(safe-area-inset-bottom, 12px));
+        flex-shrink: 0;
+        background: #090e1a;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.75rem;
+        z-index: 5;
     }
 
     .form-grid {
