@@ -767,13 +767,31 @@ function updateSyncBadge(synced = false) {
 // Modal Helpers
 function openModal(id) {
     const modal = document.getElementById(id);
-    if (modal) modal.classList.add('active');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        const bodyEl = modal.querySelector('.admin-modal-body');
+        if (bodyEl) bodyEl.scrollTop = 0;
+    }
 }
 
 function closeModal(id) {
     const modal = document.getElementById(id);
-    if (modal) modal.classList.remove('active');
+    if (modal) {
+        modal.classList.remove('active');
+        const anyActive = document.querySelector('.admin-modal-backdrop.active');
+        if (!anyActive) {
+            document.body.style.overflow = '';
+        }
+    }
 }
+
+// Click outside modal box to close
+document.addEventListener('click', (e) => {
+    if (e.target.classList && e.target.classList.contains('admin-modal-backdrop') && e.target.id !== 'publishProgressModal') {
+        closeModal(e.target.id);
+    }
+});
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
