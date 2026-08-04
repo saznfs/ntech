@@ -212,16 +212,20 @@
     <!-- ADD / EDIT PRODUCT MODAL -->
     <div class="admin-modal-backdrop" id="productEditModal">
         <div class="admin-modal-box">
+            <!-- Only drag handle is fixed — everything else scrolls -->
             <div class="modal-drag-handle"></div>
-            <div class="admin-modal-header">
-                <div class="admin-modal-title" id="productModalTitle">
-                    <i class="fa-solid fa-box"></i> Add New Product
-                </div>
-                <button class="btn-icon" onclick="closeModal('productEditModal')"><i class="fa-solid fa-xmark"></i></button>
-            </div>
 
-            <!-- Single scrollable area — no separate fixed footer -->
+            <!-- Single scroll area: title + form + buttons all scroll together -->
             <div class="admin-modal-body" id="productModalBodyScroll">
+
+                <!-- Title row inside scroll -->
+                <div class="modal-inner-header">
+                    <div class="admin-modal-title" id="productModalTitle">
+                        <i class="fa-solid fa-box"></i> Add New Product
+                    </div>
+                    <button class="btn-icon" onclick="closeModal('productEditModal')"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
                 <form id="productForm" onsubmit="saveProduct(event)">
                     <input type="hidden" id="productIdInput">
 
@@ -335,7 +339,7 @@
                         </div>
                     </div>
 
-                    <!-- Action buttons at the bottom of the scrollable form -->
+                    <!-- Action buttons at the bottom -->
                     <div class="modal-form-actions">
                         <button type="button" class="btn btn-outline" onclick="closeModal('productEditModal')">
                             <i class="fa-solid fa-xmark"></i> Cancel
@@ -350,6 +354,7 @@
     </div>
 
     <!-- GITHUB REPOSITORY SETTINGS MODAL -->
+
     <div class="admin-modal-backdrop" id="githubSettingsModal">
         <div class="admin-modal-box" style="max-width: 550px;">
             <div class="admin-modal-header">

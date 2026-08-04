@@ -751,6 +751,28 @@
     width: 100%;
 }
 
+/* Title + close button row inside the scrollable body */
+.modal-inner-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.modal-inner-header .admin-modal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex: 1;
+    line-height: 1.4;
+}
+
 /* Action buttons at the bottom of the scrollable form content */
 .modal-form-actions {
     display: flex;
