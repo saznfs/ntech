@@ -711,14 +711,19 @@ function updateSyncBadge(synced = false) {
     const badge = document.getElementById('syncStatusBadge');
     if (!badge) return;
 
+    badge.removeAttribute('style');
     if (synced) {
-        badge.className = 'admin-badge';
-        badge.style.background = 'linear-gradient(135deg, #00e676, #00b0ff)';
-        badge.innerHTML = '<i class="fa-solid fa-cloud-check"></i> Live &amp; Synced';
+        badge.className = 'admin-badge synced';
+        badge.innerHTML = '<i class="fa-solid fa-cloud-check"></i> <span>Live &amp; Synced</span>';
     } else {
-        badge.className = 'admin-badge';
-        badge.style.background = 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))';
-        badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Ready';
+        const hasUnsaved = localStorage.getItem('ntech_admin_products_v1') !== null;
+        if (hasUnsaved) {
+            badge.className = 'admin-badge pending';
+            badge.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i> <span>Unpublished Edits</span>';
+        } else {
+            badge.className = 'admin-badge synced';
+            badge.innerHTML = '<i class="fa-solid fa-cloud-check"></i> <span>Live &amp; Synced</span>';
+        }
     }
 }
 

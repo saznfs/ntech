@@ -33,36 +33,51 @@
     <header class="admin-header">
         <div class="container">
             <nav class="admin-nav">
+                <!-- Left: Brand Logo & Live Sync Status -->
                 <div class="admin-title-group">
-                    <a href="index.html" class="brand-logo">
+                    <a href="index.html" class="brand-logo" title="N TECH Home">
                         <img src="./logo/favicon_io/apple-touch-icon.png" alt="N TECH Logo">
                         <span class="brand-name">N TECH</span>
                     </a>
-                    <span class="admin-badge" id="syncStatusBadge"><i class="fa-solid fa-screwdriver-wrench"></i> Product Manager</span>
+                    <span class="admin-badge synced" id="syncStatusBadge">
+                        <i class="fa-solid fa-cloud-check"></i>
+                        <span>Live &amp; Synced</span>
+                    </span>
                 </div>
 
+                <!-- Right: Dedicated Admin Action Toolbar -->
                 <div class="admin-actions">
-                    <button class="btn btn-primary btn-sm" onclick="openAddProductModal()">
-                        <i class="fa-solid fa-plus"></i> Add Product
+                    <button class="btn-admin btn-admin-primary" onclick="openAddProductModal()" title="Add New Product">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add Product</span>
                     </button>
-                    <button class="btn btn-whatsapp btn-sm" style="background: linear-gradient(135deg, #00e676, #00b0ff); border: none;" onclick="startPublishWorkflow()">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Publish Website
+                    <button class="btn-admin btn-admin-publish" onclick="startPublishWorkflow()" title="Sync and Publish to GitHub">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Publish Website</span>
                     </button>
-                    <button class="btn btn-outline btn-sm" onclick="openWebsitePreview()">
-                        <i class="fa-solid fa-eye"></i> Live Preview
+                    <button class="btn-admin btn-admin-glass" onclick="openWebsitePreview()" title="Open Live Storefront Preview">
+                        <i class="fa-solid fa-eye"></i>
+                        <span>Live Preview</span>
                     </button>
-                    <button class="btn btn-outline btn-sm" onclick="exportJSON()" title="Export products.json file">
-                        <i class="fa-solid fa-download"></i> Export JSON
+
+                    <div class="admin-actions-separator"></div>
+
+                    <button class="btn-admin btn-admin-glass" onclick="exportJSON()" title="Export products.json backup">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Export JSON</span>
                     </button>
-                    <button class="btn btn-outline btn-sm" onclick="triggerImportJSON()" title="Import products.json file">
-                        <i class="fa-solid fa-file-import"></i> Import
+                    <button class="btn-admin btn-admin-glass" onclick="triggerImportJSON()" title="Import products.json file">
+                        <i class="fa-solid fa-file-import"></i>
+                        <span>Import</span>
                     </button>
                     <input type="file" id="importJsonFileInput" accept=".json" style="display: none;" onchange="handleImportJSON(event)">
-                    <button class="btn-icon" onclick="openModal('githubSettingsModal')" title="GitHub Repository Settings">
+
+                    <button class="btn-admin btn-admin-icon" onclick="openModal('githubSettingsModal')" title="GitHub Sync Settings">
                         <i class="fa-solid fa-gear"></i>
                     </button>
-                    <a href="shop.html" class="btn btn-outline btn-sm" style="color: var(--text-dim);">
-                        <i class="fa-solid fa-arrow-left"></i> Exit
+                    <a href="shop.html" class="btn-admin btn-admin-glass btn-admin-exit" title="Exit to Public Store">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Exit</span>
                     </a>
                 </div>
             </nav>
