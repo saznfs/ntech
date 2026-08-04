@@ -426,6 +426,40 @@
         </div>
     </div>
 
+    <!-- MOBILE STICKY FLOATING ACTION DOCK -->
+    <nav class="admin-mobile-floating-bar" id="mobileFloatingBar" aria-label="Mobile Admin Navigation">
+        <button class="mobile-dock-btn" onclick="openAddProductModal()" title="Add Product">
+            <div class="dock-icon-circle dock-add">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+            <span>Add</span>
+        </button>
+        <button class="mobile-dock-btn" onclick="startPublishWorkflow()" title="Publish Live">
+            <div class="dock-icon-circle dock-publish">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <span>Publish</span>
+        </button>
+        <button class="mobile-dock-btn" onclick="openWebsitePreview()" title="Live Preview">
+            <div class="dock-icon-circle">
+                <i class="fa-solid fa-eye"></i>
+            </div>
+            <span>Preview</span>
+        </button>
+        <button class="mobile-dock-btn" onclick="openModal('githubSettingsModal')" title="GitHub Sync Settings">
+            <div class="dock-icon-circle">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+            <span>Settings</span>
+        </button>
+        <a href="shop.html" class="mobile-dock-btn" title="View Public Store">
+            <div class="dock-icon-circle">
+                <i class="fa-solid fa-store"></i>
+            </div>
+            <span>Shop</span>
+        </a>
+    </nav>
+
     <!-- JavaScript Core Modules -->
     <script src="js/data.js"></script>
     <script src="js/admin.js"></script>

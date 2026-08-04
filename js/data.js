@@ -489,7 +489,7 @@ const FAQS = [
         a: "Absolutely. Hardware repairs like display, battery, charging port, and back glass replacements do not affect your phone storage or personal data."
     },
     {
-        q: "How can I check product prices or get a repair quotation?",
-        a: "You can use our website's automated 'Ask Price' or 'Repair Quotation Wizard' buttons! It generates an instant pre-filled message directly to our WhatsApp (+94 71 230 9934)."
+        q: "How can I order products or get a repair quotation?",
+        a: "Our website displays clear, real-time pricing for all original accessories and parts. You can click 'Order on WhatsApp' on any product card or use our interactive 'Repair Quotation Wizard' for instant WhatsApp support (+94 71 230 9934)."
     }
 ];

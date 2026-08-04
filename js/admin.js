@@ -286,43 +286,47 @@ function renderProductsList() {
     }
 
     tableBody.innerHTML = list.map(prod => `
-        <tr>
-            <td>
-                <img src="${prod.image}" alt="${prod.name}" class="product-thumb" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80'">
+        <tr class="admin-prod-row" data-id="${prod.id}">
+            <td class="col-img">
+                <img src="${prod.image}" alt="${prod.name}" class="product-thumb" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=80'">
             </td>
-            <td>
+            <td class="col-details">
                 <div class="prod-meta-title">${prod.name}</div>
-                <div class="prod-meta-sub">ID: ${prod.id} • ${prod.brand || 'N TECH'}</div>
+                <div class="prod-meta-sub">ID: ${prod.id} • ${prod.brand || 'N TECH'} • ${prod.partsQuality || 'Genuine'}</div>
             </td>
-            <td>
+            <td class="col-category">
                 <span class="badge badge-purple">${formatCategoryName(prod.category)}</span>
             </td>
-            <td>
-                <strong style="color: var(--accent-cyan);">${prod.price}</strong>
-                ${prod.originalPrice ? `<div style="font-size:0.75rem; text-decoration:line-through; color:var(--text-dim);">${prod.originalPrice}</div>` : ''}
+            <td class="col-price">
+                <strong class="price-val" style="color: var(--accent-cyan); font-size: 1rem;">${prod.price}</strong>
+                ${prod.originalPrice ? `<span class="price-orig" style="font-size:0.75rem; text-decoration:line-through; color:var(--text-dim); margin-left: 0.35rem;">${prod.originalPrice}</span>` : ''}
             </td>
-            <td>
+            <td class="col-stock">
                 <span class="${getStockBadgeClass(prod.stockStatus)}">${prod.stockStatus}</span>
-                <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">Qty: ${prod.stockQuantity !== undefined ? prod.stockQuantity : 10}</div>
+                <span class="qty-info" style="font-size: 0.75rem; color: var(--text-dim); margin-left: 0.35rem;">(Qty: ${prod.stockQuantity !== undefined ? prod.stockQuantity : 10})</span>
             </td>
-            <td>
+            <td class="col-badge">
                 <span class="badge badge-cyan">${prod.badge || 'Standard'}</span>
             </td>
-            <td>
+            <td class="col-actions">
                 <div class="action-btn-group">
                     ${adminState.currentTab === 'active' ? `
                         <button class="btn-icon edit" title="Edit Product" onclick="openEditProductModal('${prod.id}')">
                             <i class="fa-solid fa-pen-to-square"></i>
+                            <span class="btn-text-mobile">Edit</span>
                         </button>
                         <button class="btn-icon delete" title="Move to Recycle Bin" onclick="moveToTrash('${prod.id}')">
                             <i class="fa-solid fa-trash"></i>
+                            <span class="btn-text-mobile">Delete</span>
                         </button>
                     ` : `
                         <button class="btn-icon restore" title="Restore Product" onclick="restoreFromTrash('${prod.id}')">
                             <i class="fa-solid fa-rotate-left"></i>
+                            <span class="btn-text-mobile">Restore</span>
                         </button>
                         <button class="btn-icon delete" title="Permanently Delete" onclick="permanentDelete('${prod.id}')">
                             <i class="fa-solid fa-xmark"></i>
+                            <span class="btn-text-mobile">Purge</span>
                         </button>
                     `}
                 </div>

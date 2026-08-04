@@ -157,7 +157,7 @@ function openProductModal(productId) {
 
                 <div style="margin-top: auto; display: flex; gap: 1rem; flex-wrap: wrap;">
                     <a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-lg shimmer-effect" style="flex: 1;">
-                        <i class="fa-brands fa-whatsapp"></i> Ask Price & Order via WhatsApp
+                        <i class="fa-brands fa-whatsapp"></i> Order on WhatsApp
                     </a>
                 </div>
             </div>
