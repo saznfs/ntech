@@ -51,36 +51,72 @@ function saveGitHubConfig() {
     updateSyncBadge();
 }
 
-// Load Products Data (LocalStorage or data/products.json)
-async function loadAdminData() {
+// Load Products Data (LocalStorage or data/products.json with cache buster)
+async function loadAdminData(forceRemote = false) {
     try {
         const cachedProducts = localStorage.getItem('ntech_products_data');
         const cachedTrash = localStorage.getItem('ntech_products_trash');
 
-        if (cachedProducts) {
-            adminState.products = JSON.parse(cachedProducts);
-        } else if (typeof DEFAULT_PRODUCTS !== 'undefined') {
-            adminState.products = [...DEFAULT_PRODUCTS];
-        } else {
-            const res = await fetch('data/products.json');
+        if (!forceRemote && cachedProducts) {
+            try {
+                adminState.products = JSON.parse(cachedProducts);
+            } catch (err) {
+                adminState.products = [];
+            }
+        }
+        
+        if (forceRemote || !adminState.products || adminState.products.length === 0) {
+            const res = await fetch(`data/products.json?_t=${Date.now()}&v=adm`, {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-cache' }
+            });
             if (res.ok) {
                 adminState.products = await res.json();
+                localStorage.setItem('ntech_products_data', JSON.stringify(adminState.products));
+            } else if (typeof DEFAULT_PRODUCTS !== 'undefined') {
+                adminState.products = [...DEFAULT_PRODUCTS];
             }
         }
 
         if (cachedTrash) {
-            adminState.trash = JSON.parse(cachedTrash);
+            try {
+                adminState.trash = JSON.parse(cachedTrash);
+            } catch (err) {
+                adminState.trash = [];
+            }
         }
     } catch (e) {
         console.error("Error loading products data:", e);
+        if (typeof DEFAULT_PRODUCTS !== 'undefined' && (!adminState.products || adminState.products.length === 0)) {
+            adminState.products = [...DEFAULT_PRODUCTS];
+        }
     }
 }
 
-// Save Admin State to LocalStorage
+// Save Admin State to LocalStorage and broadcast update
 function saveAdminState() {
     localStorage.setItem('ntech_products_data', JSON.stringify(adminState.products));
     localStorage.setItem('ntech_products_trash', JSON.stringify(adminState.trash));
+    localStorage.setItem('ntech_products_last_sync', String(Date.now()));
+    
+    if (typeof PRODUCTS !== 'undefined') {
+        PRODUCTS = adminState.products;
+    }
+    
+    // Broadcast live event for any open tabs or embeds
+    window.dispatchEvent(new CustomEvent('ntech_products_updated', {
+        detail: { products: adminState.products }
+    }));
+
     updateSyncBadge();
+}
+
+// Fetch fresh products from server & reload dashboard
+async function refreshAdminFromServer() {
+    showNotification('Syncing catalog from server...', 'info');
+    await loadAdminData(true);
+    renderDashboard();
+    showNotification('Catalog synchronized with live server data!', 'success');
 }
 
 // Event Listeners Initialization

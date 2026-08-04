@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCustomerReviews();
     renderFaqAccordion();
     initBackToTop();
+    if (typeof fetchProductsData === 'function') {
+        fetchProductsData(true);
+    }
 });
 
 // Sticky Navbar Scroll

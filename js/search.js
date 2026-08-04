@@ -4,6 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearchSystem();
 });
 
+// Live update search suggestions when product catalog updates
+window.addEventListener('ntech_products_updated', () => {
+    const searchInput = document.getElementById('universalSearchInput');
+    if (searchInput && searchInput.value.trim()) {
+        performUniversalSearch(searchInput.value.trim().toLowerCase());
+    } else {
+        renderDefaultSearchSuggestions();
+    }
+});
+
 function initSearchSystem() {
     const searchModal = document.getElementById('searchModal');
     const searchInput = document.getElementById('universalSearchInput');

@@ -7,17 +7,30 @@ document.addEventListener('DOMContentLoaded', () => {
     initShopSection();
 });
 
-async function initShopSection() {
-    if (typeof fetchProductsData === 'function') {
-        await fetchProductsData();
+// Real-time live update listener when fresh product catalog is fetched
+window.addEventListener('ntech_products_updated', (e) => {
+    if (e.detail && e.detail.products) {
+        renderCategoryTabs();
+        renderProductsGrid();
     }
+});
+
+async function initShopSection() {
     // Read ?cat= URL query param for cross-page category navigation
     const urlParams = new URLSearchParams(window.location.search);
     const catParam = urlParams.get('cat');
     if (catParam) activeCategoryFilter = catParam;
 
+    // Render immediately from active data
     renderCategoryTabs();
     renderProductsGrid();
+
+    // Fetch fresh data in background and update UI seamlessly
+    if (typeof fetchProductsData === 'function') {
+        await fetchProductsData(true);
+        renderCategoryTabs();
+        renderProductsGrid();
+    }
 }
 
 function renderCategoryTabs() {

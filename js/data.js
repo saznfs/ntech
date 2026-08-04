@@ -424,29 +424,81 @@ try {
     console.warn("Failed to load cached products:", e);
 }
 
-// Asynchronous fetch from data/products.json
-async function fetchProductsData() {
-    try {
-        const localData = localStorage.getItem('ntech_products_data');
-        if (localData) {
-            const parsed = JSON.parse(localData);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-                PRODUCTS = parsed;
-                return PRODUCTS;
+// Global In-Flight Fetch Promise
+let _productsFetchPromise = null;
+
+/**
+ * Fetches latest product catalog from data/products.json with cache-busting query.
+ * Always retrieves fresh data from server, updates localStorage, and broadcasts update event.
+ */
+async function fetchProductsData(force = false) {
+    if (_productsFetchPromise && !force) return _productsFetchPromise;
+
+    _productsFetchPromise = (async () => {
+        try {
+            // Build cache-busting query with current timestamp & version
+            const cacheBuster = `_t=${Date.now()}&v=${Math.random().toString(36).substring(2, 8)}`;
+            const res = await fetch(`data/products.json?${cacheBuster}`, {
+                cache: 'no-store',
+                headers: {
+                    'Pragma': 'no-cache',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate'
+                }
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    PRODUCTS = data;
+                    try {
+                        localStorage.setItem('ntech_products_data', JSON.stringify(PRODUCTS));
+                        localStorage.setItem('ntech_products_last_sync', String(Date.now()));
+                    } catch (err) {}
+
+                    // Broadcast update to all active page components
+                    window.dispatchEvent(new CustomEvent('ntech_products_updated', {
+                        detail: { products: PRODUCTS }
+                    }));
+                }
             }
+        } catch (e) {
+            console.warn("Network fetch for data/products.json failed, using active state:", e);
+        } finally {
+            _productsFetchPromise = null;
         }
-        const res = await fetch('data/products.json');
-        if (res.ok) {
-            const data = await res.json();
-            if (Array.isArray(data) && data.length > 0) {
-                PRODUCTS = data;
-                localStorage.setItem('ntech_products_data', JSON.stringify(PRODUCTS));
+        return PRODUCTS;
+    })();
+
+    return _productsFetchPromise;
+}
+
+// Auto-sync fresh data on tab visibility or window load
+if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            fetchProductsData(true);
+        }
+    });
+
+    if (typeof window !== 'undefined') {
+        window.addEventListener('load', () => {
+            fetchProductsData(true);
+        });
+        // Storage event listener for cross-tab sync
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'ntech_products_data' && e.newValue) {
+                try {
+                    const parsed = JSON.parse(e.newValue);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        PRODUCTS = parsed;
+                        window.dispatchEvent(new CustomEvent('ntech_products_updated', {
+                            detail: { products: PRODUCTS }
+                        }));
+                    }
+                } catch (err) {}
             }
-        }
-    } catch (e) {
-        console.warn("Could not fetch data/products.json, using current state", e);
+        });
     }
-    return PRODUCTS;
 }
 
 
