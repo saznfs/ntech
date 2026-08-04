@@ -661,7 +661,9 @@
     color: #00e676;
 }
 
-/* Modal Form Styles */
+/* ============================================================
+   Modal — Desktop (flex layout, iOS not affected here)
+   ============================================================ */
 .admin-modal-backdrop {
     position: fixed;
     inset: 0;
@@ -676,7 +678,6 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
-    /* NO touch-action:none here — must not block child scroll gestures */
 }
 
 .admin-modal-backdrop.active {
@@ -695,8 +696,7 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), var(--shadow-glow);
-    /* NO overflow:hidden — it clips children and breaks iOS scroll allocation */
-    overflow: visible;
+    overflow: hidden;
     position: relative;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     transform: scale(0.96);
@@ -716,7 +716,6 @@
     transform: scale(1);
 }
 
-/* Header — fixed height, does not scroll */
 .admin-modal-header {
     padding: 1.1rem 1.4rem;
     border-bottom: 1px solid var(--border-glass);
@@ -726,7 +725,6 @@
     background: rgba(15, 23, 42, 0.98);
     flex-shrink: 0;
     z-index: 5;
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .admin-modal-title {
@@ -738,23 +736,21 @@
     gap: 0.65rem;
 }
 
-/* THE critical scroll container — direct flex child of modal-box */
+/* Scrollable area — direct flex child of modal-box */
 .admin-modal-body {
-    flex: 1 1 0;
+    flex: 1 1 auto;
     min-height: 0;
     padding: 1.4rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
 }
 
-/* Form inside body — no flex tricks, just normal block flow */
 .admin-modal-body form {
     display: block;
     width: 100%;
 }
 
-/* Footer — fixed height, does not scroll */
 .admin-modal-footer {
     padding: 1rem 1.4rem;
     border-top: 1px solid var(--border-glass);
@@ -765,7 +761,6 @@
     background: rgba(10, 15, 29, 0.98);
     flex-shrink: 0;
     z-index: 5;
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
 }
 
 /* Form Layout Grid */
@@ -1394,29 +1389,33 @@
         box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
     }
 
-    /* Modal dialogs on Mobile: Bottom Sheet */
+    /* ============================================================
+       Modal — Mobile Bottom Sheet (iPhone Safari compatible)
+       Uses position:absolute so iOS gets explicit pixel height.
+       overflow:hidden on backdrop creates the clipping boundary.
+       ============================================================ */
     .admin-modal-backdrop {
         padding: 0;
-        align-items: flex-end;
-        justify-content: center;
-        /* NO touch-action:none on backdrop */
+        overflow: hidden; /* Creates bounded scroll region for iOS */
     }
 
+    /* Position box absolutely so it has a definite pixel height on iOS */
     .admin-modal-box {
-        max-height: 92vh;
-        max-height: 92dvh;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
         height: 92vh;
         height: 92dvh;
         border-radius: 20px 20px 0 0;
         width: 100%;
-        margin: 0;
         border-bottom: none;
         box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.85);
         display: flex;
         flex-direction: column;
-        /* NO overflow:hidden — prevents iOS from allocating scroll layer */
-        overflow: visible;
-        position: relative;
+        overflow: hidden; /* Must be hidden to clip border-radius and bound scroll */
+        margin: 0;
+        max-height: none;
     }
 
     .modal-drag-handle {
@@ -1429,7 +1428,6 @@
         flex-shrink: 0;
         background: #0f172a;
         border-radius: 20px 20px 0 0;
-        /* NO touch-action:none */
     }
 
     .admin-modal-title {
@@ -1438,8 +1436,9 @@
         padding-right: 0.5rem;
     }
 
+    /* Scrollable body — flex:1 works because parent has explicit height (92dvh) */
     .admin-modal-body {
-        flex: 1 1 0;
+        flex: 1 1 auto;
         min-height: 0;
         padding: 1.15rem;
         overflow-y: scroll;

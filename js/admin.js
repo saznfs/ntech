@@ -803,12 +803,11 @@ function updateSyncBadge(synced = false) {
 // Sync badge initial state
 // (Event listeners are registered in the main initEventListeners function)
 
-// Modal Helpers — iOS Safari compatible (no body lock)
+// Modal Helpers — iOS Safari compatible
 function openModal(id) {
     const modal = document.getElementById(id);
     if (!modal) return;
     modal.classList.add('active');
-    // Reset scroll position of the body scroll container
     const bodyEl = modal.querySelector('.admin-modal-body');
     if (bodyEl) bodyEl.scrollTop = 0;
 }
@@ -818,23 +817,13 @@ function closeModal(id) {
     if (modal) modal.classList.remove('active');
 }
 
-// Prevent the background page from scrolling when a modal is open.
-// We allow touchmove on .admin-modal-body (native scroll), block everywhere else inside the backdrop.
+// Prevent background page scroll when modal is open.
+// Allow native scroll inside .admin-modal-body, block everything else inside backdrop.
 document.addEventListener('touchmove', function(e) {
-    const activeBackdrop = document.querySelector('.admin-modal-backdrop.active');
-    if (!activeBackdrop) return; // no modal open — let page scroll normally
-
-    // Allow scroll only inside the modal body scroll container
-    let node = e.target;
-    while (node && node !== activeBackdrop) {
-        if (node.classList && node.classList.contains('admin-modal-body')) {
-            return; // inside scroll zone — let it scroll natively
-        }
-        node = node.parentNode;
+    if (!document.querySelector('.admin-modal-backdrop.active')) return;
+    if (!e.target.closest('.admin-modal-body')) {
+        e.preventDefault();
     }
-
-    // Outside modal body (header, footer, backdrop) — prevent background scroll
-    e.preventDefault();
 }, { passive: false });
 
 // Click outside modal box to close
