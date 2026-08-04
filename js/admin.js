@@ -800,14 +800,66 @@ function updateSyncBadge(synced = false) {
     }
 }
 
-// Modal Helpers
+// Event Listeners Initialization
+function initEventListeners() {
+    initModalTouchFixes();
+    updateSyncBadge();
+}
+
+// iOS Safari Touch Scroll and Boundary Fixes
+function initModalTouchFixes() {
+    document.querySelectorAll('.admin-modal-backdrop').forEach(backdrop => {
+        backdrop.addEventListener('touchmove', (e) => {
+            // Check if touch originated from inside the scrollable modal body
+            const scrollable = e.target.closest('.admin-modal-body');
+            if (!scrollable) {
+                // Prevent touching header/footer/backdrop from scrolling the background page
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        const body = backdrop.querySelector('.admin-modal-body');
+        if (body) {
+            // Prevent initial top-boundary lock on iOS WebKit
+            body.addEventListener('touchstart', () => {
+                const top = body.scrollTop;
+                const totalScroll = body.scrollHeight;
+                const currentScroll = top + body.offsetHeight;
+
+                if (top === 0) {
+                    body.scrollTop = 1;
+                } else if (currentScroll === totalScroll) {
+                    body.scrollTop = top - 1;
+                }
+            }, { passive: true });
+        }
+    });
+}
+
+// Modal Helpers with iOS Scroll Locking
+let _savedScrollPosition = 0;
+
 function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) {
         modal.classList.add('active');
+        
+        // Save current scroll position
+        _savedScrollPosition = window.pageYOffset || document.documentElement.scrollTop || 0;
+        
+        // Lock background document on iOS & Android
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${_savedScrollPosition}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
         document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+
         const bodyEl = modal.querySelector('.admin-modal-body');
-        if (bodyEl) bodyEl.scrollTop = 0;
+        if (bodyEl) {
+            bodyEl.scrollTop = 1;
+        }
     }
 }
 
@@ -817,7 +869,15 @@ function closeModal(id) {
         modal.classList.remove('active');
         const anyActive = document.querySelector('.admin-modal-backdrop.active');
         if (!anyActive) {
+            // Restore document scroll on iOS & Android
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.width = '';
             document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+            window.scrollTo(0, _savedScrollPosition);
         }
     }
 }
