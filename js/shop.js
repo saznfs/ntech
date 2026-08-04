@@ -85,7 +85,10 @@ function renderProductsGrid() {
 
                 <div class="product-price-row">
                     <div>
-                        <div class="product-price" style="font-size: 0.95rem; font-weight: 700; color: var(--accent-cyan); display: flex; align-items: center;"><i class="fa-brands fa-whatsapp" style="margin-right: 0.35rem; color: #25D366;"></i> Ask Price via WhatsApp</div>
+                        <div class="product-price" style="font-size: 1.1rem; font-weight: 800; color: var(--accent-cyan); display: flex; align-items: baseline; gap: 0.35rem;">
+                            <span>${prod.price}</span>
+                            ${prod.originalPrice ? `<span style="font-size: 0.75rem; text-decoration: line-through; color: var(--text-dim);">${prod.originalPrice}</span>` : ''}
+                        </div>
                     </div>
                     <span class="badge badge-purple"><i class="fa-solid fa-circle-check"></i> ${prod.stockStatus}</span>
                 </div>
@@ -95,7 +98,7 @@ function renderProductsGrid() {
                         <i class="fa-solid fa-eye"></i> Details
                     </button>
                     <button class="btn-order-whatsapp shimmer-effect" onclick="orderProductWhatsApp('${prod.id}')">
-                        <i class="fa-brands fa-whatsapp"></i> Ask Price
+                        <i class="fa-brands fa-whatsapp"></i> Buy / Inquire
                     </button>
                 </div>
             </div>
@@ -111,7 +114,7 @@ function openProductModal(productId) {
     const content = document.getElementById('productModalContent');
     if (!modal || !content) return;
 
-    const whatsappOrderMsg = `Hi N TECH Mobile Solution,\n\nI would like to inquire about the price of:\n\n• Product: ${prod.name}\n• Brand: ${prod.brand}\n• Quality: ${prod.partsQuality}\n\nPlease let me know the current price, availability, and ordering details. Thanks!`;
+    const whatsappOrderMsg = `Hi N TECH Mobile Solution,\n\nI am interested in buying:\n\n• Product: ${prod.name}\n• Price: ${prod.price}\n• Brand: ${prod.brand}\n• Quality: ${prod.partsQuality}\n\nPlease confirm availability and payment/delivery details. Thanks!`;
     const whatsappUrl = `https://wa.me/${SHOP_INFO.whatsapp}?text=${encodeURIComponent(whatsappOrderMsg)}`;
 
     content.innerHTML = `
@@ -132,8 +135,9 @@ function openProductModal(productId) {
             <div style="display: flex; flex-direction: column;">
                 <div class="product-brand" style="font-size: 0.9rem;">${prod.brand} • ${prod.partsQuality}</div>
                 <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem;">${prod.name}</h2>
-                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 1.5rem;"></i> Ask Price via WhatsApp
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 1rem; display: flex; align-items: baseline; gap: 0.6rem;">
+                    <span>${prod.price}</span>
+                    ${prod.originalPrice ? `<span style="font-size: 0.95rem; text-decoration: line-through; color: var(--text-dim);">${prod.originalPrice}</span>` : ''}
                 </div>
 
                 <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;">

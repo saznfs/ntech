@@ -374,7 +374,7 @@ function openEditProductModal(productId) {
     document.getElementById('productNameInput').value = prod.name;
     document.getElementById('productCategoryInput').value = prod.category;
     document.getElementById('productBrandInput').value = prod.brand || 'Apple';
-    document.getElementById('productPriceInput').value = prod.price || 'Ask Price via WhatsApp';
+    document.getElementById('productPriceInput').value = prod.price || 'Rs. 7,990';
     document.getElementById('productOriginalPriceInput').value = prod.originalPrice || '';
     document.getElementById('productStockStatusInput').value = prod.stockStatus || 'In Stock';
     document.getElementById('productStockQuantityInput').value = prod.stockQuantity !== undefined ? prod.stockQuantity : 10;
@@ -432,7 +432,7 @@ function saveProduct(event) {
     const name = document.getElementById('productNameInput').value.trim();
     const category = document.getElementById('productCategoryInput').value;
     const brand = document.getElementById('productBrandInput').value;
-    const price = document.getElementById('productPriceInput').value.trim() || 'Ask Price via WhatsApp';
+    const price = document.getElementById('productPriceInput').value.trim() || 'Rs. 7,990';
     const originalPrice = document.getElementById('productOriginalPriceInput').value.trim();
     const stockStatus = document.getElementById('productStockStatusInput').value;
     const stockQuantity = parseInt(document.getElementById('productStockQuantityInput').value) || 0;
