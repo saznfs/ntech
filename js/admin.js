@@ -803,12 +803,43 @@ function updateSyncBadge(synced = false) {
 // Sync badge initial state
 // (Event listeners are registered in the main initEventListeners function)
 
+// iOS Safari & Android Compatible Body Scroll Lock
+let _bodyScrollPos = 0;
+let _isBodyScrollLocked = false;
+
+function lockBodyScroll() {
+    if (_isBodyScrollLocked) return;
+    _bodyScrollPos = window.pageYOffset || document.documentElement.scrollTop || 0;
+    
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${_bodyScrollPos}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    _isBodyScrollLocked = true;
+}
+
+function unlockBodyScroll() {
+    if (!_isBodyScrollLocked) return;
+    
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    
+    window.scrollTo(0, _bodyScrollPos);
+    _isBodyScrollLocked = false;
+}
+
 // Modal Helpers
 function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) {
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        lockBodyScroll();
         const bodyEl = modal.querySelector('.admin-modal-body');
         if (bodyEl) {
             bodyEl.scrollTop = 0;
@@ -822,10 +853,26 @@ function closeModal(id) {
         modal.classList.remove('active');
         const anyActive = document.querySelector('.admin-modal-backdrop.active');
         if (!anyActive) {
-            document.body.style.overflow = '';
+            unlockBodyScroll();
         }
     }
 }
+
+// Prevent iOS boundary bounce trap inside scrollable modal body
+document.addEventListener('touchstart', (e) => {
+    const modalBody = e.target.closest('.admin-modal-body');
+    if (!modalBody) return;
+    
+    const top = modalBody.scrollTop;
+    const totalScroll = modalBody.scrollHeight;
+    const currentScroll = top + modalBody.offsetHeight;
+
+    if (top === 0) {
+        modalBody.scrollTop = 1;
+    } else if (currentScroll >= totalScroll) {
+        modalBody.scrollTop = top - 1;
+    }
+}, { passive: true });
 
 // Click outside modal box to close
 document.addEventListener('click', (e) => {
