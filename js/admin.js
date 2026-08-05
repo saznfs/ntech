@@ -817,45 +817,91 @@ function closeModal(id) {
     if (modal) modal.classList.remove('active');
 }
 
-// iOS Safari scroll fix for modal body
-// Problem: iOS does not pass scroll gestures to parent when touch starts on an input/select
-// Solution: track touch manually and set scrollTop directly
+// iOS Safari scroll fix — manual scrollTop + momentum inertia
+// Bypasses iOS's tap-claim that blocks scroll when touching inputs/selects
 let _iosModalScroll = null;
+let _momentumRaf    = null;
+
+function _cancelMomentum() {
+    if (_momentumRaf) { cancelAnimationFrame(_momentumRaf); _momentumRaf = null; }
+}
 
 document.addEventListener('touchstart', function(e) {
+    _cancelMomentum();
     _iosModalScroll = null;
     if (!document.querySelector('.admin-modal-backdrop.active')) return;
     const modalBody = e.target.closest('.admin-modal-body');
     if (!modalBody) return;
     _iosModalScroll = {
-        el: modalBody,
-        startY: e.touches[0].clientY,
-        startTop: modalBody.scrollTop
+        el:       modalBody,
+        startY:   e.touches[0].clientY,
+        startTop: modalBody.scrollTop,
+        lastY:    e.touches[0].clientY,
+        lastT:    Date.now(),
+        velocity: 0             // px / ms  (positive = scrolling down)
     };
 }, { passive: true });
 
 document.addEventListener('touchmove', function(e) {
     if (!document.querySelector('.admin-modal-backdrop.active')) return;
 
-    const inBody = e.target.closest('.admin-modal-body');
-
-    if (!inBody) {
-        // Outside scroll area — always block page scroll
-        e.preventDefault();
+    if (!e.target.closest('.admin-modal-body')) {
+        e.preventDefault();   // block page scroll outside modal body
         return;
     }
 
-    // Inside scroll area — manually drive scrollTop so iOS input-touch-claim is bypassed
-    if (_iosModalScroll) {
-        const dy = _iosModalScroll.startY - e.touches[0].clientY;
-        _iosModalScroll.el.scrollTop = _iosModalScroll.startTop + dy;
-        e.preventDefault(); // prevent background page from scrolling
+    if (!_iosModalScroll) return;
+
+    const now      = Date.now();
+    const currentY = e.touches[0].clientY;
+    const dt       = now - _iosModalScroll.lastT;
+
+    if (dt > 0) {
+        // Exponential moving average for smooth velocity estimate
+        const raw = (_iosModalScroll.lastY - currentY) / dt;
+        _iosModalScroll.velocity = _iosModalScroll.velocity * 0.6 + raw * 0.4;
     }
+
+    _iosModalScroll.lastY = currentY;
+    _iosModalScroll.lastT = now;
+
+    // Directly drive scrollTop — bypasses iOS gesture claim on inputs
+    _iosModalScroll.el.scrollTop = _iosModalScroll.startTop + (_iosModalScroll.startY - currentY);
+    e.preventDefault();
 }, { passive: false });
 
 document.addEventListener('touchend', function() {
+    if (!_iosModalScroll) return;
+
+    const el       = _iosModalScroll.el;
+    let   velocity = _iosModalScroll.velocity;   // px / ms
     _iosModalScroll = null;
+
+    // Skip momentum for very slow swipes (taps)
+    if (Math.abs(velocity) < 0.08) return;
+
+    const DECEL       = 0.93;    // multiply velocity each frame (lower = harder stop)
+    const STOP_BELOW  = 0.05;   // px/ms — stop when slower than this
+
+    function step() {
+        velocity *= DECEL;
+
+        if (Math.abs(velocity) < STOP_BELOW) { _momentumRaf = null; return; }
+
+        const next   = el.scrollTop + velocity * 16;   // 16ms ≈ 1 frame @ 60fps
+        const maxTop = el.scrollHeight - el.clientHeight;
+
+        if (next <= 0)       { el.scrollTop = 0;      _momentumRaf = null; return; }
+        if (next >= maxTop)  { el.scrollTop = maxTop; _momentumRaf = null; return; }
+
+        el.scrollTop  = next;
+        _momentumRaf  = requestAnimationFrame(step);
+    }
+
+    _momentumRaf = requestAnimationFrame(step);
 }, { passive: true });
+
+
 
 // Click outside modal box to close
 document.addEventListener('click', (e) => {
