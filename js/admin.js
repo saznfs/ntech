@@ -817,14 +817,45 @@ function closeModal(id) {
     if (modal) modal.classList.remove('active');
 }
 
-// Prevent background page scroll when modal is open.
-// Allow native scroll inside .admin-modal-body, block everything else inside backdrop.
+// iOS Safari scroll fix for modal body
+// Problem: iOS does not pass scroll gestures to parent when touch starts on an input/select
+// Solution: track touch manually and set scrollTop directly
+let _iosModalScroll = null;
+
+document.addEventListener('touchstart', function(e) {
+    _iosModalScroll = null;
+    if (!document.querySelector('.admin-modal-backdrop.active')) return;
+    const modalBody = e.target.closest('.admin-modal-body');
+    if (!modalBody) return;
+    _iosModalScroll = {
+        el: modalBody,
+        startY: e.touches[0].clientY,
+        startTop: modalBody.scrollTop
+    };
+}, { passive: true });
+
 document.addEventListener('touchmove', function(e) {
     if (!document.querySelector('.admin-modal-backdrop.active')) return;
-    if (!e.target.closest('.admin-modal-body')) {
+
+    const inBody = e.target.closest('.admin-modal-body');
+
+    if (!inBody) {
+        // Outside scroll area — always block page scroll
         e.preventDefault();
+        return;
+    }
+
+    // Inside scroll area — manually drive scrollTop so iOS input-touch-claim is bypassed
+    if (_iosModalScroll) {
+        const dy = _iosModalScroll.startY - e.touches[0].clientY;
+        _iosModalScroll.el.scrollTop = _iosModalScroll.startTop + dy;
+        e.preventDefault(); // prevent background page from scrolling
     }
 }, { passive: false });
+
+document.addEventListener('touchend', function() {
+    _iosModalScroll = null;
+}, { passive: true });
 
 // Click outside modal box to close
 document.addEventListener('click', (e) => {

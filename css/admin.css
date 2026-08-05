@@ -744,11 +744,14 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
+    /* iOS Safari: allow vertical scroll gestures even when touch starts on inputs */
+    touch-action: pan-y;
 }
 
 .admin-modal-body form {
     display: block;
     width: 100%;
+    touch-action: pan-y; /* inherit pan-y to all form children */
 }
 
 /* Title + close button row inside the scrollable body */
@@ -1478,6 +1481,8 @@
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior-y: contain;
+        /* iOS Safari: pan-y propagates scroll from inputs/selects to this container */
+        touch-action: pan-y;
     }
 
     /* Inline buttons inside scroll — full width side by side */
